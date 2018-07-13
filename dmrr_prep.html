@@ -11839,6 +11839,8 @@ div#notebook {
 <span class="n">samples_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sample_sheet.csv&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">,</span> <span class="s1">&#39;Source&#39;</span><span class="p">]:</span>  <span class="c1"># strip whitespace for consistency</span>
     <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="s1">&#39;Gender&#39;</span><span class="p">:</span>  <span class="c1"># capitalize first letter</span>
+        <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
 <span class="c1"># only use healthy control study and samples that passed quality control</span>
 <span class="n">samples_df</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;Study&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">study_names</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;MISEQ.QC.PASS&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PASS&#39;</span><span class="p">)]</span>
 <span class="c1"># keep only the necessary columns</span>
@@ -12137,7 +12139,7 @@ div#notebook {
          &#39;39&#39;,
          &#39;40&#39;,
          &#39;41&#39;},
- &#39;Gender&#39;: {&#39;Male&#39;, &#39;male&#39;, &#39;Female&#39;},
+ &#39;Gender&#39;: {&#39;Female&#39;, &#39;Male&#39;},
  &#39;Race&#39;: {&#39;African American&#39;,
           &#39;Asian&#39;,
           &#39;Multiracial&#39;,

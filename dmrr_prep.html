@@ -11784,10 +11784,39 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">study_name</span> <span class="o">=</span> <span class="s1">&#39;EXR-MTEWA1HealthyControls&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">study_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Healthy Controls&#39;</span><span class="p">]</span>
+<span class="n">study_id</span> <span class="o">=</span> <span class="s1">&#39;EXR-MTEWA1HealthyControls&#39;</span>
+<span class="n">directory</span> <span class="o">=</span> <span class="s1">&#39;healthyCtrl/&#39;</span>
+<span class="n">is_time_series</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">study_names = [&#39;Feeding Study-30 min&#39;, &#39;Feeding Study-1 hr&#39;]</span>
+<span class="sd">study_id = &#39;EXR-MTEWA1HealthyControls&#39;</span>
+<span class="sd">directory = &#39;feedingStudy/&#39;</span>
+<span class="sd">is_time_series = True</span>
+<span class="sd">&#39;&#39;&#39;</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[1]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#34;\nstudy_names = [&#39;Feeding Study-30 min&#39;, &#39;Feeding Study-1 hr&#39;]\nstudy_id = &#39;EXR-MTEWA1HealthyControls&#39;\ndirectory = &#39;feedingStudy/&#39;\nis_time_series = True\n&#34;</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -11808,14 +11837,16 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">samples_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;sample_sheet.csv&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">,</span> <span class="s1">&#39;Source&#39;</span><span class="p">]:</span>  <span class="c1"># capitalize and strip whitespace for consistency</span>
-    <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">,</span> <span class="s1">&#39;Source&#39;</span><span class="p">]:</span>  <span class="c1"># strip whitespace for consistency</span>
     <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 <span class="c1"># only use healthy control study and samples that passed quality control</span>
-<span class="n">samples_df</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;Study&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Healthy Controls&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;MISEQ.QC.PASS&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PASS&#39;</span><span class="p">)]</span>
+<span class="n">samples_df</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;Study&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">study_names</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;MISEQ.QC.PASS&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PASS&#39;</span><span class="p">)]</span>
 <span class="c1"># keep only the necessary columns</span>
-<span class="n">samples_df</span> <span class="o">=</span> <span class="n">samples_df</span><span class="p">[[</span><span class="s1">&#39;Participant.ID&#39;</span><span class="p">,</span> <span class="s1">&#39;MT.Unique.ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">,</span> <span class="s1">&#39;Source&#39;</span><span class="p">]]</span>
+<span class="n">samples_df</span> <span class="o">=</span> <span class="n">samples_df</span><span class="p">[[</span><span class="s1">&#39;Participant.ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Sample.ID&#39;</span><span class="p">,</span> <span class="s1">&#39;MT.Unique.ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">,</span> <span class="s1">&#39;Source&#39;</span><span class="p">,</span> <span class="s1">&#39;Study&#39;</span><span class="p">]]</span>
 <span class="n">samples_df</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;MT.Unique.ID&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Participant.ID&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">is_time_series</span><span class="p">:</span>
+    <span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;timepoint&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">sample_id</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">sample_id</span> <span class="ow">in</span> <span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;Sample.ID&#39;</span><span class="p">]],</span> <span class="n">index</span><span class="o">=</span><span class="n">samples_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">study</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;Study&#39;</span><span class="p">]],</span> <span class="n">index</span><span class="o">=</span><span class="n">samples_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">samples_df</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
@@ -11853,13 +11884,17 @@ div#notebook {
     <tr style="text-align: right;">
       <th></th>
       <th>Participant.ID</th>
+      <th>Sample.ID</th>
       <th>Age</th>
       <th>Gender</th>
       <th>Race</th>
       <th>Source</th>
+      <th>Study</th>
     </tr>
     <tr>
       <th>MT.Unique.ID</th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -11871,42 +11906,52 @@ div#notebook {
     <tr>
       <th>1</th>
       <td>70014</td>
-      <td>23.0</td>
+      <td>70014</td>
+      <td>23</td>
       <td>Male</td>
       <td>Asian</td>
       <td>Plasma</td>
+      <td>Healthy Controls</td>
     </tr>
     <tr>
       <th>107</th>
       <td>70014</td>
-      <td>23.0</td>
+      <td>70014</td>
+      <td>23</td>
       <td>Male</td>
       <td>Asian</td>
       <td>Serum</td>
+      <td>Healthy Controls</td>
     </tr>
     <tr>
       <th>2</th>
       <td>70016</td>
-      <td>39.0</td>
+      <td>70016</td>
+      <td>39</td>
       <td>Male</td>
       <td>White</td>
       <td>Plasma</td>
+      <td>Healthy Controls</td>
     </tr>
     <tr>
       <th>108</th>
       <td>70016</td>
-      <td>39.0</td>
+      <td>70016</td>
+      <td>39</td>
       <td>Male</td>
       <td>White</td>
       <td>Serum</td>
+      <td>Healthy Controls</td>
     </tr>
     <tr>
       <th>3</th>
       <td>70028</td>
-      <td>33.0</td>
+      <td>70028</td>
+      <td>33</td>
       <td>Female</td>
       <td>White</td>
       <td>Plasma</td>
+      <td>Healthy Controls</td>
     </tr>
   </tbody>
 </table>
@@ -11934,6 +11979,8 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># remove duplicate participants -- all have plasma but some additionally have serum</span>
 <span class="n">participants</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">samples_df</span><span class="p">[</span><span class="s1">&#39;Source&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Plasma&#39;</span><span class="p">)]</span>
+<span class="k">if</span> <span class="n">is_time_series</span><span class="p">:</span>
+    <span class="n">participants</span> <span class="o">=</span> <span class="n">participants</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">participants</span><span class="p">[</span><span class="s1">&#39;timepoint&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;T0&#39;</span><span class="p">)]</span>
 <span class="n">participants</span> <span class="o">=</span> <span class="n">participants</span><span class="p">[[</span><span class="s1">&#39;Participant.ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Participant.ID&#39;</span><span class="p">)</span>
 <span class="n">participants</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
@@ -11985,31 +12032,31 @@ div#notebook {
   <tbody>
     <tr>
       <th>70014</th>
-      <td>23.0</td>
+      <td>23</td>
       <td>Asian</td>
       <td>Male</td>
     </tr>
     <tr>
       <th>70016</th>
-      <td>39.0</td>
+      <td>39</td>
       <td>White</td>
       <td>Male</td>
     </tr>
     <tr>
       <th>70028</th>
-      <td>33.0</td>
+      <td>33</td>
       <td>White</td>
       <td>Female</td>
     </tr>
     <tr>
       <th>70029</th>
-      <td>27.0</td>
-      <td>Black or african american</td>
+      <td>27</td>
+      <td>Black or African American</td>
       <td>Female</td>
     </tr>
     <tr>
       <th>70038</th>
-      <td>22.0</td>
+      <td>22</td>
       <td>White</td>
       <td>Female</td>
     </tr>
@@ -12037,18 +12084,21 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">race_ontology</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Asian&#39;</span><span class="p">:</span> <span class="s1">&#39;Asian&#39;</span><span class="p">,</span>
- <span class="s1">&#39;Black or african american&#39;</span><span class="p">:</span> <span class="s1">&#39;African American&#39;</span><span class="p">,</span>
- <span class="s1">&#39;Mixed/asian &amp; white&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiracial&#39;</span><span class="p">,</span>
- <span class="s1">&#39;Mixed/asian &amp;black&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiracial&#39;</span><span class="p">,</span>
- <span class="s1">&#39;Mixed/black, white, asian&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiracial&#39;</span><span class="p">,</span>
- <span class="s1">&#39;Native hawiian or other pacific islander&#39;</span><span class="p">:</span> <span class="s1">&#39;Native Hawaiian or Other Pacific Islander&#39;</span><span class="p">,</span>
- <span class="s1">&#39;Pacific islander&#39;</span><span class="p">:</span> <span class="s1">&#39;Native Hawaiian or Other Pacific Islander&#39;</span><span class="p">,</span>
- <span class="s1">&#39;White&#39;</span><span class="p">:</span> <span class="s1">&#39;White&#39;</span><span class="p">}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pprint</span>
+<span class="n">race_ontology</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Asian&#39;</span><span class="p">:</span> <span class="s1">&#39;Asian&#39;</span><span class="p">,</span> <span class="s1">&#39;asian&#39;</span><span class="p">:</span> <span class="s1">&#39;Asian&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Black or African American&#39;</span><span class="p">:</span> <span class="s1">&#39;African American&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;mixed/asian &amp; white&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiracial&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;mixed/Asian &amp;Black&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiracial&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;mixed/black, white, asian&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiracial&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Native Hawiian or other Pacific Islander&#39;</span><span class="p">:</span> <span class="s1">&#39;Native Hawaiian or Other Pacific Islander&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Pacific Islander&#39;</span><span class="p">:</span> <span class="s1">&#39;Native Hawaiian or Other Pacific Islander&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;White&#39;</span><span class="p">:</span> <span class="s1">&#39;White&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">:</span> <span class="s1">&#39;White&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;#MISSING#&#39;</span><span class="p">:</span> <span class="s1">&#39;#MISSING#&#39;</span><span class="p">}</span>
 <span class="k">for</span> <span class="n">part_id</span> <span class="ow">in</span> <span class="n">participants</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
     <span class="n">race</span> <span class="o">=</span> <span class="n">participants</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">part_id</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">]</span>
-    <span class="n">participants</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">part_id</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">race_ontology</span><span class="p">[</span><span class="n">race</span><span class="p">]</span> <span class="k">if</span> <span class="n">race</span> <span class="ow">in</span> <span class="n">race_ontology</span> <span class="k">else</span> <span class="s1">&#39;Multiracial&#39;</span>
-<span class="nb">set</span><span class="p">(</span><span class="n">participants</span><span class="p">[</span><span class="s1">&#39;Race&#39;</span><span class="p">])</span>
+    <span class="n">participants</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">part_id</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">race_ontology</span><span class="p">[</span><span class="n">race</span><span class="p">]</span> <span class="k">if</span> <span class="n">race</span> <span class="ow">in</span> <span class="n">race_ontology</span> <span class="k">else</span> <span class="s1">&#39;Multiracial&#39;</span>
+    
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">({</span><span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(</span><span class="n">participants</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]),</span> <span class="s1">&#39;Race&#39;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(</span><span class="n">participants</span><span class="p">[</span><span class="s1">&#39;Race&#39;</span><span class="p">]),</span> <span class="s1">&#39;Gender&#39;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(</span><span class="n">participants</span><span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">])})</span>
 </pre></div>
 
 </div>
@@ -12061,19 +12111,40 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[4]:</div>
+<div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;African American&#39;,
- &#39;Asian&#39;,
- &#39;Multiracial&#39;,
- &#39;Native Hawaiian or Other Pacific Islander&#39;,
- &#39;White&#39;}</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;Age&#39;: {&#39;20&#39;,
+         &#39;21&#39;,
+         &#39;22&#39;,
+         &#39;23&#39;,
+         &#39;24&#39;,
+         &#39;25&#39;,
+         &#39;26&#39;,
+         &#39;27&#39;,
+         &#39;28&#39;,
+         &#39;29&#39;,
+         &#39;30&#39;,
+         &#39;31&#39;,
+         &#39;32&#39;,
+         &#39;33&#39;,
+         &#39;34&#39;,
+         &#39;35&#39;,
+         &#39;36&#39;,
+         &#39;37&#39;,
+         &#39;38&#39;,
+         &#39;39&#39;,
+         &#39;40&#39;,
+         &#39;41&#39;},
+ &#39;Gender&#39;: {&#39;Male&#39;, &#39;male&#39;, &#39;Female&#39;},
+ &#39;Race&#39;: {&#39;African American&#39;,
+          &#39;Asian&#39;,
+          &#39;Multiracial&#39;,
+          &#39;Native Hawaiian or Other Pacific Islander&#39;,
+          &#39;White&#39;}}
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -12218,15 +12289,16 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="k">for</span> <span class="n">part_id</span> <span class="ow">in</span> <span class="n">participants</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">part_id</span><span class="p">)</span>
     <span class="n">participant_column</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span> <span class="o">+</span> <span class="n">part_id</span>
-    <span class="n">donor_id</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-DO&#39;</span>
+    <span class="n">donor_id</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-DO&#39;</span>
     <span class="n">participants</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">part_id</span><span class="p">,</span> <span class="s1">&#39;donor.id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">donor_id</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">,</span> <span class="n">donors</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Donor&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">donor_id</span>  <span class="c1"># for matching biosamples to donor ids</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Status&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Add&#39;</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Sex&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">participants</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">part_id</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">]</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Racial Category&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">participants</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">part_id</span><span class="p">,</span> <span class="s1">&#39;Race&#39;</span><span class="p">]</span>
-    <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Donor Type&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Healthy Subject&#39;</span>
+    <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Donor Type&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Healthy Subject&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">is_time_series</span> <span class="k">else</span> <span class="s1">&#39;Experimental&#39;</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Age&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">participants</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">part_id</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; years&#39;</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;* Custom Metadata&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">donors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*- Property Name&#39;</span><span class="p">,</span> <span class="n">participant_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Participant.ID&#39;</span>
@@ -12243,6 +12315,116 @@ div#notebook {
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>70014
+70016
+70028
+70029
+70038
+70057
+70067
+70082
+70092
+70103
+70105
+70114
+70125
+70182
+70283
+70287
+70348
+70362
+70406
+70416
+70435
+70467
+70484
+70498
+70510
+70539
+70548
+70549
+70557
+70581
+70583
+70695
+70716
+70831
+70956
+70977
+71004
+71039
+71080
+71121
+71134
+71138
+71154
+71229
+71244
+71263
+71305
+71311
+71316
+71337
+71346
+71358
+71367
+71387
+71398
+71431
+71438
+71443
+71467
+71471
+71473
+71495
+71521
+71582
+71591
+71690
+71796
+71816
+71818
+71843
+71856
+71875
+71906
+71911
+71916
+71919
+71927
+71940
+71973
+71983
+72049
+72062
+72078
+72108
+72111
+72114
+72119
+72133
+72138
+72148
+72165
+72221*
+72253*
+72254*
+72255*
+72316
+72339*
+72349*
+72376
+72397
+</pre>
+</div>
+</div>
 
 <div class="output_area">
 
@@ -12379,35 +12561,35 @@ div#notebook {
   <tbody>
     <tr>
       <th>70014</th>
-      <td>23.0</td>
+      <td>23</td>
       <td>Asian</td>
       <td>Male</td>
       <td>EXR-MTEWA1HealthyControls1-DO</td>
     </tr>
     <tr>
       <th>70016</th>
-      <td>39.0</td>
+      <td>39</td>
       <td>White</td>
       <td>Male</td>
       <td>EXR-MTEWA1HealthyControls2-DO</td>
     </tr>
     <tr>
       <th>70028</th>
-      <td>33.0</td>
+      <td>33</td>
       <td>White</td>
       <td>Female</td>
       <td>EXR-MTEWA1HealthyControls3-DO</td>
     </tr>
     <tr>
       <th>70029</th>
-      <td>27.0</td>
+      <td>27</td>
       <td>African American</td>
       <td>Female</td>
       <td>EXR-MTEWA1HealthyControls4-DO</td>
     </tr>
     <tr>
       <th>70038</th>
-      <td>22.0</td>
+      <td>22</td>
       <td>White</td>
       <td>Female</td>
       <td>EXR-MTEWA1HealthyControls5-DO</td>
@@ -12457,6 +12639,11 @@ div#notebook {
 
 <span class="n">biosamples</span> <span class="o">=</span> <span class="n">biosamples</span><span class="o">.</span><span class="n">T</span>
 <span class="n">biosamples</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="s1">&#39;*-- DocURL&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="s1">&#39;Relative ID (accession) of doc, provide Document URL&#39;</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">is_time_series</span><span class="p">:</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="s1">&#39;*- Property Name2&#39;</span><span class="p">,</span> <span class="n">biosamples</span><span class="p">[</span><span class="s1">&#39;*- Property Name&#39;</span><span class="p">])</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="s1">&#39;*-- Value2&#39;</span><span class="p">,</span> <span class="n">biosamples</span><span class="p">[</span><span class="s1">&#39;*-- Value&#39;</span><span class="p">])</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;*- Property Name3&#39;</span><span class="p">,</span> <span class="n">biosamples</span><span class="p">[</span><span class="s1">&#39;*- Property Name&#39;</span><span class="p">])</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="s1">&#39;*-- Value3&#39;</span><span class="p">,</span> <span class="n">biosamples</span><span class="p">[</span><span class="s1">&#39;*-- Value&#39;</span><span class="p">])</span>
 <span class="n">biosamples</span> <span class="o">=</span> <span class="n">biosamples</span><span class="o">.</span><span class="n">T</span>
 <span class="n">biosamples</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">,</span> <span class="p">:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
@@ -12579,7 +12766,7 @@ div#notebook {
     <span class="n">donor_id</span> <span class="o">=</span> <span class="n">participants</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mt_unique_id</span><span class="p">,</span> <span class="s1">&#39;Participant.ID&#39;</span><span class="p">],</span> <span class="s1">&#39;donor.id&#39;</span><span class="p">]</span>
     <span class="n">sample_column</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mt_unique_id</span><span class="p">)</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">,</span> <span class="n">biosamples</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
-    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Biosample&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-BS&#39;</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Biosample&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-BS&#39;</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Status&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Add&#39;</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Name&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;MT.Unique.ID_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mt_unique_id</span><span class="p">)</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;- Donor ID&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">donor_id</span>
@@ -12593,11 +12780,16 @@ div#notebook {
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;-- exRNA Source&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39; total cell-free biofluid RNA&#39;</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;-- Fractionation&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Yes&#39;</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;* Related Experiments&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*- Related Experiment&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;1-EX&#39;</span>
-    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*-- DocURL&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;coll/Experiments/doc/&#39;</span> <span class="o">+</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;1-EX&#39;</span>
-    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;* Custom Metadata&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*- Related Experiment&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;1-EX&#39;</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*-- DocURL&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;coll/Experiments/doc/&#39;</span> <span class="o">+</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;1-EX&#39;</span>
+    <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;* Custom Metadata&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">is_time_series</span> <span class="k">else</span> <span class="mi">1</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*- Property Name&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Participant.ID&#39;</span>
     <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*-- Value&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mt_unique_id</span><span class="p">,</span> <span class="s1">&#39;Participant.ID&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">is_time_series</span><span class="p">:</span>
+        <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*- Property Name2&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;timepoint&#39;</span>
+        <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*-- Value2&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mt_unique_id</span><span class="p">,</span> <span class="s1">&#39;timepoint&#39;</span><span class="p">]</span>
+        <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*- Property Name3&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;timestep&#39;</span>
+        <span class="n">biosamples</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;*-- Value3&#39;</span><span class="p">,</span> <span class="n">sample_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mt_unique_id</span><span class="p">,</span> <span class="s1">&#39;timestep&#39;</span><span class="p">]</span>
     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
     
 <span class="n">biosamples</span> <span class="o">=</span> <span class="n">biosamples</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -12708,7 +12900,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Strip-numbers-from-the-&quot;value&quot;-columns">Strip numbers from the "value" columns<a class="anchor-link" href="#Strip-numbers-from-the-&quot;value&quot;-columns">&#182;</a></h2>
+<h2 id="Strip-numbers-from-the-value-columns-and-property-indices">Strip numbers from the value columns and property indices<a class="anchor-link" href="#Strip-numbers-from-the-value-columns-and-property-indices">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -12718,8 +12910,8 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="p">[</span><span class="n">donors</span><span class="p">,</span> <span class="n">biosamples</span><span class="p">]:</span>
-    <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">col</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">!=</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)]</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">column_names</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">col</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">!=</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)]</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">col</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">l</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)],</span> <span class="n">name</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12825,15 +13017,15 @@ div#notebook {
 <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;userLogin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sovacool&#39;</span>
 <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;exrna-mtewa1&#39;</span>
 <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;db&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;hg19_exRNA&#39;</span>
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;runMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;-RU.metadata.tsv&#39;</span>
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;submissionMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;-SU.metadata.tsv&#39;</span>
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;studyMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;-ST.metadata.tsv&#39;</span>
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;experimentMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;-EX.metadata.tsv&#39;</span>
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;biosampleMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;-BS.metadata.tsv&#39;</span>
-<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;donorMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;-DO.metadata.tsv&#39;</span>
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;runMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;-RU.metadata.tsv&#39;</span>
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;submissionMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;-SU.metadata.tsv&#39;</span>
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;studyMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;-ST.metadata.tsv&#39;</span>
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;experimentMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;-EX.metadata.tsv&#39;</span>
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;biosampleMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;-BS.metadata.tsv&#39;</span>
+<span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;donorMetadataFileName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;-DO.metadata.tsv&#39;</span>
 
 <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;manifest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">mt_unique_id</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">samples_df</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">mt_unique_id</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">samples_df</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>  <span class="c1"># only include fastq filenames in this study</span>
     <span class="n">fastq_filename</span> <span class="o">=</span> <span class="n">sample_filenames</span><span class="p">[</span><span class="n">mt_unique_id</span><span class="p">]</span>
     <span class="n">sample_name</span> <span class="o">=</span> <span class="s1">&#39;MT.Unique.ID_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mt_unique_id</span><span class="p">)</span>
     <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;manifest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;sampleName&#39;</span><span class="p">:</span> <span class="n">sample_name</span><span class="p">,</span> <span class="s1">&#39;dataFileName&#39;</span><span class="p">:</span> <span class="n">fastq_filename</span><span class="p">})</span>
@@ -12880,10 +13072,10 @@ div#notebook {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 
-<span class="n">donors</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;healthyCtrl/&#39;</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;donorMetadataFileName&#39;</span><span class="p">],</span>  <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">biosamples</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;healthyCtrl/&#39;</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;biosampleMetadataFileName&#39;</span><span class="p">],</span>  <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">donors</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;donorMetadataFileName&#39;</span><span class="p">],</span>  <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">biosamples</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;biosampleMetadataFileName&#39;</span><span class="p">],</span>  <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">study_name</span> <span class="o">+</span> <span class="s1">&#39;.manifest.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">study_id</span> <span class="o">+</span> <span class="s1">&#39;.manifest.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">manifest</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 
@@ -12896,7 +13088,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Validate-that-the-files-listed-in-the-manifest-exist">Validate that the files listed in the manifest exist<a class="anchor-link" href="#Validate-that-the-files-listed-in-the-manifest-exist">&#182;</a></h2>
+<h2 id="Validate-that-the-metadata-files-listed-in-the-manifest-exist">Validate that the metadata files listed in the manifest exist<a class="anchor-link" href="#Validate-that-the-metadata-files-listed-in-the-manifest-exist">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -12909,7 +13101,7 @@ div#notebook {
 
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">manifest</span><span class="p">:</span>
     <span class="k">if</span> <span class="s1">&#39;FileName&#39;</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s1">&#39;healthyCtrl/&#39;</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">manifest</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
 </pre></div>
 
 </div>

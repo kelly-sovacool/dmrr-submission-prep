@@ -1,0 +1,395 @@
+#property	value	domain	default	required	description
+Experiment		autoID(EXR, uniqAlphaNum, EX)			Document Describing Information About the Experiment; Experiment ID
+- Status		enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate)	Add	TRUE	Status of the document
+- exRNA Source Isolation Protocol		[valueless]			Category -- exRNA Source Isolation Protocol
+-- Protocol Description		string		TRUE	Description of exRNA source isolation Protocol
+--* Protocol Documents		numItems			Items -- Protocol Documents
+--*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+--*-- Protocol File		fileUrl			URL to protocol document file
+--*-- File Description		string			Protocol document file description
+-* References		numItems			Items -- Protocol references
+-*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+-*-- PubMed ID		posInt			PubMed ID of reference
+-*-- DOI		url 			Digitial Object Identifier of the protocol reference
+-*-- Other URL		url 			Other URL of the protocol reference
+-- Cell Culture Supernatant		[valueless]			Category -- Cell Culture Supernatant
+--- Passage Details		string			Category -- Cell Culture Passage Details
+---- Karyotype Done		enum(Yes, No)			If karyotype was done
+----- Karyotype		string			Specify karyotype
+---- Passage Number		int			In calculating passage number, include passages from the source
+---- Passaging Method		enum(Trypsin, Collagenase, EDTA, Mechanical, Other)			Passaging method
+----- Other Passaging Method		string			Other passaging method, if not found in list
+---- Basal Media		string			Type of basal media used
+---- Media Additives		string			Type of media additive
+---- Substrate		enum(Mouse embryonic feeder layer, Gelatin, Matrigel, Geltrex, Poly-D-lysine, Other)			Type of cell culture substrate
+----- Other Substrate		string			Other substrate, if not found in list
+---- Temperature		string			Temperature at which the cell culture was passaged
+---- Oxygen Tension		enum(0.5%, 2%, 5%, 8%, 21%)			Oxygen tension
+---- Cell Type Marker		string		TRUE	Cell type marker
+--- Differentiation		string			Category -- Differentiation
+---- Total Duration		measurement(days)			Total duration of differentiation, in days
+---* Stages 		numItems			Items -- Stages of differentiation
+---*- Stage		int		TRUE	Differentiation stage number
+---*-- Basal Media		string			Basal media used in this differentiation stage
+---*-- Media Additives		string			Media additives used in this differentiation stage
+---*-- Substrate		string			Substrate used in this differentiation stage
+---*-- Duration		measurement(minutes)			Duration of this differentiation stage
+--- Confluency		measurement(%)			Confluency of cell culture - proportion of surface in a culture dish or a flask which is covered by cells
+--- Serum Used		enum(Yes, No)		TRUE	Was serum used?
+---- Type		enum(Not vesicle depleted, Vesicle depleted in-house, Purchased vesicle depleted)			Type of serum (Not vesicle depleted, Vesicle depleted in-house, Purchased vesicle depleted)
+----- Vesicle Depleted In-house		string			Category -- Vesicle depleted in-house
+------ Centrifugation Parameters		string			Category -- Centrifugation Parameters
+------- Temperature		measurement(C)			Centrifugation temperature
+------- Speed		measurement(xg)			Centrifugation speed
+------- Duration		measurement(hours)			Time taken for centrifugation
+----- Purchased Vesicle Depleted		string			Category -- Purchased Vesicle Depleted
+------ Product Details		string			Category -- Product Details
+------- Vendor		string			Vendor name
+------- Product Name		string			Product name
+------- Catalog Number		string			Catalog Number
+--- Mycoplasma Test		enum(Yes, No)			If mycoplasma test was done
+---- Details of Mycoplasma Test		string			Details about mycoplasma test
+---- Weeks from Sample Collection		measurement(weeks)			Within how many weeks of sample collection was the last mycoplasma test taken?
+--- Cell Viability		measurement(%)			Cell viability
+--- Cell Removal Step Done		enum(Yes, No)		TRUE	Was a specific cell removal step performed for cell culture supernatant - Yes or No?
+---- Cell Removal Method		enum(Low speed centrifugation, High speed centrifugation, Filtration)			Method used for cell removal (Low speed centrifugation, High speed centrifugation, Filtration)
+----- Low Speed Centrifugation		string			Category -- Low Speed Centrifugation
+------ Centrifugation Parameters		string			Category -- Centrifugation Parameters
+------- Temperature		measurement(C)			Centrifugation temperature
+------- Speed		measurement(xg)			Centrifugation speed
+------- Duration		measurement(hours)			Time taken for centrifugation
+----- High Speed Centrifugation		string			Category -- High Speed Centrifugation
+------ Time Performed		enum(Pre-freeze, Post-freeze)			Was centrifugation performed pre-freeze or post-freeze?
+------ Centrifugation Parameters		string			Category -- Centrifugation Parameters
+------- Temperature		measurement(C)			Centrifugation temperature
+------- Speed		measurement(xg)			Centrifugation speed
+------- Duration		measurement(hours)			Time taken for centrifugation
+----- Filtration		string			Category -- Filtration
+------ Time Performed		enum(Pre-freeze, Post-freeze)			Was filtration performed pre-freeze or post-freeze?
+------ Pore Size		measurement(um)			Size of filtration pore
+-- Biofluid		[valueless]		TRUE	Category -- Biofluid
+--- Cell Removal Step Done		enum(Yes, No)		TRUE	Was a specific cell removal step performed for Biofluid - Yes or No?
+---- Cell Removal Method		enum(Low speed centrifugation, High speed centrifugation, Filtration)			Method used for cell removal (Low speed centrifugation, High speed centrifugation, Filtration)
+----- Low Speed Centrifugation		string			Category -- Low Speed Centrifugation
+------ Centrifugation Parameters		string			Category -- Centrifugation Parameters
+------- Temperature		measurement(C)			Centrifugation temperature
+------- Speed		measurement(xg)			Centrifugation speed
+------- Duration		measurement(hours)			Time taken for centrifugation
+----- High Speed Centrifugation		string			Category -- High Speed Centrifugation
+------ Time Performed		enum(Pre-freeze, Post-freeze)			Was centrifugation performed pre-freeze or post-freeze?
+------ Centrifugation Parameters		string			Category -- Centrifugation Parameters
+------- Temperature		measurement(C)			Centrifugation temperature
+------- Speed		measurement(xg)			Centrifugation speed
+------- Duration		measurement(hours)			Time taken for centrifugation
+----- Filtration		string			Category -- Filtration
+------ Time Performed		enum(Pre-freeze, Post-freeze)			Was filtration performed pre-freeze or post-freeze?
+------ Pore Size		measurement(um)			Size of filtration pore
+- Extracellular Vesicle Isolation Protocol		[valueless]			Category -- Extracellular Vesicle Isolation Protocol
+-- Protocol Description		string		TRUE	Description of extracellular vesicle isolation protocol
+--* Protocol Documents		numItems			Items -- Protocol Documents
+--*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+--*-- Protocol File		fileUrl			URL to protocol document file
+--*-- File Description		string			Protocol document file description
+-* References		numItems			Items -- Protocol References
+-*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+-*-- PubMed ID		posInt			PubMed ID of reference
+-*-- DOI		url 			Digitial Object Identifier of the protocol reference
+-*-- Other URL		url 			Other URL of the protocol reference
+-* Differential Centrifugation Stages		string			Items --  Differential Centrifugation Stages
+-*- Differential Centrifugation Stage		int		TRUE	Stage of differential centrifugation
+-*-- Centrifugation Parameters		string			Category -- Centrifugation Parameters
+-*--- Temperature		measurement(C)			Centrifugation temperature
+-*--- Speed		measurement(xg)			Centrifugation speed
+-*--- Duration		measurement(hours)			Time taken for centrifugation
+-*--- Sample Source		enum(Pellet, Supernatant)			Source from which the sample was prepared (Pellet or Supernatant)
+-* Serial Filtration Stages		string			Items --  Serial Filtration Stages
+-*- Serial Filtration Stage		int		TRUE	Stage of Serial Filtration
+-*-- Filtration Parameters		string			Category -- Filtration Parameters
+-*--- Pore Size		measurement(um)			Pore size
+-*--- Sample Source		enum(Pellet, Supernatant)			Source from which the sample was prepared (Pellet or Supernatant)
+-- Density Gradient Centrifugation		enum(Yes, No)			Was density gradient centrifugation performed - Yes or No?
+--- Notes		string			Details of density gradient centrifugation
+-- Gel Filtration		enum(Yes, No)			Was gel filtration performed - Yes or No?
+--- Notes		string			Details of gel filtration
+-- Commercially Available Kits		enum(Exoquick (System Biosciences), Nexosome (NX Pharmagen), ME (New England Peptide), Other)		TRUE	Select the commercially available kit that was used for extracellular vesicle isolation (or choose Other if the kit you used is not listed)
+--- Other Kits		string			Other commercial kit, if not available in the list
+- exRNA Sample Preparation Protocol		[valueless]			Category -- exRNA Sample Preparation Protocol
+-- Protocol Description		string		TRUE	Description of exRNA sample preparation protocol
+--* Protocol Documents		numItems			Items -- exRNA Sample Preparation Protocol Documents
+--*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+--*-- Protocol File		fileUrl			URL to protocol document file
+--*-- File Description		string			Protocol document file description
+-* References		numItems			Items -- Protocol References
+-*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+-*-- PubMed ID		posInt			PubMed ID of reference
+-*-- DOI		url 			Digitial Object Identifier of the protocol reference
+-*-- Other URL		url 			Other URL of the protocol reference
+-- Pre-purification of Extracellular Vesicles		enum(Yes, No)		TRUE	Were any steps done to pre-purify extracellular vesicles ΓÇô Yes or No?
+--- RNase Treatment of EV		enum(Yes, No)			Was EV treated with RNase?
+---- RNase Concentration		measurement(ng/ml)			Concentration of RNase
+---- Incubation Temperature		measurement(C)			Incubation temperature
+---- Incubation Time		measurement(minutes)			Incubation time
+---- RNase Inactivation Method		string			Method used for RNase inactivation
+--- DNase Treatment of EV		enum(Yes, No)			Was EV treated with DNase?
+---- DNase Concentration		measurement(ng/ml)			Concentration of DNase
+---- Incubation Temperature		measurement(C)			Incubation temperature
+---- Incubation Time		measurement(minutes)			Incubation time
+---- DNase inactivation Method		string			Method used for DNase inactivation
+-- Spike-in RNAs		enum(Yes, No)			Were spike-in RNAs used?
+--- Type		string			Type of spike-in RNA used
+--- Concentration		measurement(nM)			Concentration of spike-in RNA used
+-- RNA Isolation Method		[valueless]			Category -- RNA Isolation Method
+--- Description		string			Description of RNA isolation method
+--- RNA Isolation Kit		enum(miRNeasy (Qiagen), Serum and Plasma kit (Qiagen), miRVana (Ambion), MiRVana Paris (Ambion), Trizol + alcohol precipitation, Trizol + spin column, miRcury biofluids (Exiqon), miRCURY RNA isolation kit - Cell & Plant (Exiqon), Plasma/Serum Circulating and Exosomal RNA Purification Kit(Norgen Biotek), Exo50 (Exosome Diagnostics), Total Exosome Isolation Kit and Total Exosome RNA and Protein Isolation Kit (Invitrogen), Nexosome (NX Pharmagen, size exclusion column), PureExo (101Bio), ExoMir (Nordic Biosite), Taqman miRNA ABC, SeraMir Kit (System Biosciences), Other)		TRUE	Type of RNA isolation kit used
+---- Other Kits		string			Other type of RNA isolation kit, if not available in the list
+---- Proteinase K Treatment		enum(Yes, No)			Was the EV treated with ProteinaseK - Yes or No?
+----- Proteinase K Concentration		measurement(mg/ml)			Concentration of Proteinase K used
+----- SDS Concentration		measurement(%)			Concentration of SDS used
+----- Incubation Temperature		measurement(C)			Incubation temperature
+----- Incubation Time		measurement(minutes)			Incubation time
+---- DNase Treatment		enum(Yes, No)			Was the EV treated with DNase - Yes or No?
+----- DNase Concentration		measurement(ng/ml)			Concentration of DNase used
+-- exRNA Quantification Method		enum(Ribogreen, Bioanalyzer, Nanodrop, Other)		TRUE	Method used for RNA quantification
+--- Other exRNA Quantification Method		string			Other method for RNA quantification, if not listed
+--* Bioanalyzer Profile Images		numItems			Items -- Bioanalyzer Profiles
+--*- Bioanalyzer File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+--*-- Bioanalyzer File		fileUrl			URL to Bioanalyzer profile of exRNA (uploaded image)
+--*-- File Description		string			Description of the Bioanalyzer image
+-- Enzymatic Treatment of Purified exRNA		enum(Yes, No)			Was the purified exRNA treated with any enzymes like kinase?
+--- Notes		string			Details about enzymatic treatment of purified exRNA
+-- Method for Assessment of Purity		string			Analysis method used for finding purity of exRNA
+-- Yield		string			Yield of purified exRNA
+-- RNA Integrity Method		string			Category - RNA Integrity Method
+--- Instrument		string			RNA integrity testing instrument
+--- RIN/RQI		string			RIN score
+--- Cq of 3' and 5' Transcripts		string			Cq of 3' and 5' transcripts
+--- Electrophoresis Traces		string			Electrophoresis Traces
+-- Inhibition Testing 		string			Inhibition testing (Cq dilutions, spike, or other)
+- Experiment Type		enum(mRNA-Seq, smRNA-Seq, qPCR Assay, Other)		TRUE	Experiment Type - mRNA-Seq, smRNA-Seq, TLDA Assay, or Other
+-- Other Experiment Type		string			Other experiment type
+-- mRNA-Seq		[valueless]			Category -- mRNA-Seq
+--- Time Course		enum(Short series, Periodic, Developmental)			Description of time points used in the experiment, like short series, periodic, developmental time courses, etc.
+--- mRNA Extraction Protocol		[valueless]			Category -- mRNA Extraction Protocol
+---- Protocol Description		string			Description of mRNA extraction protocol
+----* Protocol Documents		numItems			Items -- mRNA Extraction Protocol Documents
+----*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+----*-- Protocol File		fileUrl			URL to protocol document file
+----*-- File Description		string			Protocol document file description
+---* References		numItems			Items -- Protocol References
+---*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+---*-- PubMed ID		posInt			PubMed ID of reference
+---*-- DOI		url 			Digitial Object Identifier of the protocol reference
+---*-- Other URL		url 			Other URL of the protocol reference
+---- mRNA Enrichment		string			The mRNA enrichment method used in the extraction protocol
+---- Initial mRNA Yield		measurement(ng)			Initial mRNA yield from extraction procedure
+---- Method for Assessment of Purity		string			Analysis method used for finding purity of extracted mRNA
+--- Library Generation		string		TRUE	Category -- Library Generation
+---- Type of Starting Material		enum(total RNA, small RNA, Other)		TRUE	Type of starting material used in library generation (total RNA, small RNA, or Other)
+----- Other Type of Starting Material		string			Other type of starting material, if not available in the list
+---- Total Quantity of RNA Starting Material		measurement(ng)			Quantity of RNA starting material used in library generation
+---- Library Construction Kit		enum(NEBNext small RNA library prep (NEB), Nextera DNA library prep kit (Illumina), NEXTflex (Bioo), TruSeq Small RNA library prep kit (Illumina), Homebrew)		TRUE	Kit used for library construction
+---- RNA Quantification Protocol		[valueless]			Category -- RNA Quantification Protocol
+----- Protocol Description		string			Protocol used for RNA Quantification
+-----* Protocol Documents		numItems			Items -- RNA Quantification Protocol Documents
+-----*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+-----*-- Protocol File		fileUrl			URL to protocol document file
+-----*-- File Description		string			Protocol document file description
+----* References		numItems			Items -- Protocol References
+----*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+----*-- PubMed ID		posInt			PubMed ID of reference
+----*-- DOI		url 			Digitial Object Identifier of the protocol reference
+----*-- Other URL		url 			Other URL of the protocol reference
+---- Purification Method		string			Method used for purification of RNA
+---- Fragmentation		enum(Sonication, Base Hydrolysis, Other)			Method used for fragmentation of RNA
+----- Other Fragmentation		string			Other method used for fragmentation of RNA, if not listed
+----- Fragment Size Range		measurement(um)			Size range of fragmented RNA
+----- Type		string			Category -- Fragmentation Type
+------ Sonication		string			Category -- If Selected ΓÇ£SonicationΓÇ¥ in ΓÇ£FragmentationΓÇ¥ Method, Provide Details
+------- Device		string			Sonication device
+------- Settings		string			Sonication settings
+------- Time		measurement(seconds)			Time in seconds for sonication
+------ Base Hydrolysis		string			Category -- If Selected ΓÇ£Base HydrolysisΓÇ¥ in ΓÇ£FragmentationΓÇ¥ Method, Provide Details
+------- NaOH Concentration		measurement(mM)			Concentration of NaOH
+------- Temperature		measurement(C)			Temperature (in Celsius) used in base hydrolysis method
+------- Time		measurement(minutes)			Time in minutes
+---- Multiplexed Samples		enum(Yes, No)			Description of multiplexing of samples
+----- Sample Name		string			Name of sample
+----- Index Barcodes		string			Barcodes used for multiplexed samples
+---* References		numItems			Items -- Library Generation Protocol References
+---*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+---*-- PubMed ID		posInt			PubMed ID of reference
+---*-- DOI		url 			Digitial Object Identifier of the protocol reference
+---*-- Other URL		url 			Other URL of the protocol reference
+--- Reverse Transcription 		string			Category -- Reverse Transcription
+---- Kit		enum(SMARTer Stranded RNA kit (Clontech), Other)		TRUE	Reverse transcription kit
+----- Other Kit		string			Other reverse transcription kit, if not listed
+---- Primer Type		enum(poly-dT, Random, Targeted, Universal, Other)		TRUE	Type of reverse transcription primer (poly-dT, Random, Targeted, Universal (used after RNA ligation of adapter sequences), or Other)
+----- Other Primer Type		string			Other type of primer, if not listed
+---- Primer Sequence		string			Sequence of reverse transcription primer
+---- Reverse Transcription Protocol		[valueless]			Category -- Reverse Transcription Protocol
+----- Protocol Description		string			Protocol used for reverse transcription
+-----* Protocol Documents		numItems			Items -- Reverse Transcription Protocol Documents
+-----*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+-----*-- Protocol File		fileUrl			URL to protocol document file
+-----*-- File Description		string			Protocol document file description
+----* References		numItems			Items -- Protocol References
+----*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+----*-- PubMed ID		posInt			PubMed ID of reference
+----*-- DOI		url 			Digitial Object Identifier of the protocol reference
+----*-- Other URL		url 			Other URL of the protocol reference
+--- Post cDNA Steps		[valueless]			Category -- Post cDNA Steps
+---- Steps		string			Steps used after cDNA synthesis
+---- 5' Dephosphorylation Protocol		string			Protocol for 5' dephosphorylation used in preparation
+---- 5' Phosphorylation Protocol		string			Protocol for 5' phosphorylation used in preparation
+--- Adapter Ligation		string			Category -- Adapter Ligation
+---- Kit		string			Kit used for adapter ligation
+---- 3' RNA Adapter Ligation Protocol		string			Protocol used for 3' RNA adapter ligation
+---- 5' RNA Adapter Ligation Protocol		string			Protocol used for 5 RNA adapter ligation
+---- 3' Adapter Sequence		string			Sequence of 3' adapter
+---- 5' Adapter Sequence		string			Sequence of 5' adapter
+---* References		numItems			Items -- Protocol References
+---*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+---*-- PubMed ID		posInt			PubMed ID of reference
+---*-- DOI		url 			Digitial Object Identifier of the protocol reference
+---*-- Other URL		url 			Other URL of the protocol reference
+--- Amplified		enum(Yes, No)		TRUE	Is the sample amplified ΓÇô Yes or No?
+---- Amplification		string			Category -- PCR Amplification
+----- Template Concentration		measurement(mM)			Concentration of PCR template
+----- Polymerase Type		string			Type of polymerase
+----- Thermocycling Program		string			Thermocycling program used in PCR
+----- Number of Cycles		posInt			PCR number of cycles
+----- Forward Primer Sequence		string			Sequence of forward primer
+----- Reverse Primer Sequence		string			Sequence of reverse primer
+----- Primer Concentration		measurement(ng)			Concentration of primer
+----- Product Isolation Protocol		[valueless]			Category -- Product Isolation Protocol
+------ Protocol Description		string			Protocol used for product isolation
+------* Protocol Documents		numItems			Items -- Product Isolation Protocol Documents
+------*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+------*-- Protocol File		fileUrl			URL to protocol document file
+------*-- File Description		string			Protocol document file description
+-----* References		numItems			Items -- Protocol References
+-----*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+-----*-- PubMed ID		posInt			PubMed ID of reference
+-----*-- DOI		url 			Digitial Object Identifier of the protocol reference
+-----*-- Other URL		url 			Other URL of the protocol reference
+---- DNA Quantification Method		enum(Picogreen, Bioanalyzer, Nanodrop, Qubit, Other)		TRUE	Method used for quantification of DNA (Picoogreen, Bioanalyzer, Nanodrop, Qubit, or Other)
+----- Other DNA Quantification Method		string			Other method used for quantification of DNA, if not listed
+----* Bioanalyzer Profile Images		numItems			Items -- Bioanalyzer Profiles
+----*- Bioanalyzer File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+----*-- Bioanalyzer File		fileUrl			URL to Bioanalyzer profile of library (uploaded image)
+----*-- File Description		string			Description of the Bioanalyzer image
+--- Notes		string			Notes on mRNA-seq protocol
+-- smRNA-Seq		[valueless]			Category -- smRNA-Seq
+--- smRNA Extraction Protocol		[valueless]			Category -- smRNA Extraction Protocol
+---- Protocol Description		string			Description of smRNA extraction protocol
+----* Protocol Documents		numItems			Items -- smRNA Extraction Protocol Documents
+----*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+----*-- Protocol File		fileUrl			URL to protocol document file
+----*-- File Description		string			Protocol document file description
+---* References		numItems			Items -- Protocol references
+---*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+---*-- PubMed ID		posInt			PubMed ID of reference
+---*-- DOI		url 			Digitial Object Identifier of the protocol reference
+---*-- Other URL		url 			Other URL of the protocol reference
+---- Size Selection Method		enum(Gel purification, Pippen prep, Other)			Method used for size selection of small RNAs
+----- Other Size Selection Method		string			Other method for size selection of small RNAs, if not listed
+---- smRNA Enrichment		string			The smRNA enrichment method used in the extraction protocol
+---- Initial smRNA Yield		measurement(ng)			Initial smRNA yield from extraction procedure
+---- Method for Assessment of Purity		string			Analysis method used for finding purity of extracted mRNA
+--- Library Generation		string		TRUE	Category -- Library Generation
+---- Type of Starting Material		enum(total RNA, small RNA, Other)		TRUE	Type of starting material used in library generation (total RNA, small RNA, or Other)
+----- Other Type of Starting Material		string			Other type of starting material, if not available in the list
+---- Strand Specificity		enum(stranded, non-stranded)		TRUE	Strand specificity of library construction method
+---- Total Quantity of RNA Starting Material		measurement(ng)			Quantity of RNA starting material used in library generation
+---- Library Construction Kit		enum(NEBNext small RNA library prep (NEB), Nextera DNA library prep kit (Illumina), NEXTflex (Bioo), TruSeq Small RNA library prep kit (Illumina), BioO NEXTFlex kit (V2), Homebrew Kit, Other)		TRUE	Kit used for library construction
+----- Other Library Construction Kit		string			Other kit used for library prep, if not listed
+---- RNA Quantification Protocol		[valueless]			Category -- RNA Quantification Protocol
+----- Protocol Description		string			Protocol used for RNA Quantification
+-----* Protocol Documents		numItems			Items -- RNA Quantification Protocol Documents
+-----*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+-----*-- Protocol File		fileUrl			URL to protocol document file
+-----*-- File Description		string			Protocol document file description
+----* References		numItems			Items -- Protocol References
+----*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+----*-- PubMed ID		posInt			PubMed ID of reference
+----*-- DOI		url 			Digitial Object Identifier of the protocol reference
+----*-- Other URL		url 			Other URL of the protocol reference
+---- Purification Method		string			Method used for purification of RNA
+---- Multiplexed Samples		enum(Yes, No)		TRUE	Description of multiplexing of samples
+----- Sample Name		string			Name of sample
+----- Index Barcodes		string			Barcodes used for multiplexed samples
+---* References		numItems			Items -- Protocol References
+---*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+---*-- PubMed ID		posInt			PubMed ID of reference
+---*-- DOI		url 			Digitial Object Identifier of the protocol reference
+---*-- Other URL		url 			Other URL of the protocol reference
+--- Reverse Transcription		string			Category -- Reverse Transcription
+---- Kit		enum(SMARTer Stranded RNA kit (Clontech), Other)		TRUE	Reverse transcription kit
+----- Other Kit		string			Other reverse transcription kit, if not listed
+---- Primer Type		enum(poly-dT, Random, Targeted, Universal, Other)			Type of reverse transcription primer (poly-dT, Random, Targeted, Universal (used after RNA ligation of adapter sequences), or Other)
+----- Other Primer Type		string			Other type of primer, if not listed
+---- Primer Sequence		string			Sequence of reverse transcription primer
+--- Adapter Ligation		string			Category -- Adapter Ligation
+---- Kit		string			Kit used for adapter ligation
+---- 3' RNA Adapter Ligation Protocol		string			Protocol used for 3' RNA adapter ligation
+---- 5' RNA Adapter Ligation Protocol		string			Protocol used for 5 RNA adapter ligation
+---- 3' Adapter Sequence		string			Sequence of 3' adapter
+----- 3' Adapter Concentration		measurement(uM)			Concentration of 3' adapter
+---- 5' Adapter Sequence		string			Sequence of 5' adapter
+----- 5' Adapter Concentration		measurement(uM)			Concentration of 5' adapter
+---- 3' Ligase		enum(T4 RNA ligase 1, T4 RNA ligase 2, T4 RNA ligase 2 truncated, T4 RNA ligase 2 truncated K227Q, T4 RNA ligase 2 truncated R55K/K227Q,  Mth ligase, Other)			Ligase used for 3' ligation
+----- Other 3' ligase		string			Other 3' ligase not in list
+---- 5' Ligase		enum(T4 RNA ligase 1, Other)			Ligase used for 5' ligation
+----- Other 5' ligase		string			Other 5' ligase not in list
+---* References		numItems			Items -- Protocol References
+---*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+---*-- PubMed ID		posInt			PubMed ID of reference
+---*-- DOI		url 			Digitial Object Identifier of the protocol reference
+---*-- Other URL		url 			Other URL of the protocol reference
+---- Reverse Transcription Protocol		[valueless]			Category -- Reverse Transcription Protocol
+----- Protocol Description		string			Protocol used for reverse transcription
+-----* Protocol Documents		numItems			Items -- Protocol Documents
+-----*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+-----*-- Protocol File		fileUrl			URL to protocol document file
+-----*-- File Description		string			Protocol document file description
+----* References		numItems			Items -- Protocol References
+----*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+----*-- PubMed ID		posInt			PubMed ID of reference
+----*-- DOI		url 			Digitial Object Identifier of the protocol reference
+----*-- Other URL		url 			Other URL of the protocol reference
+--- Amplified		enum(Yes, No)		TRUE	Is the sample amplified ΓÇô Yes or No?
+---- Amplification		string			Category -- PCR Amplification
+----- Template Concentration		measurement(mM)			Concentration of PCR template
+----- Polymerase Type		string			Type of polymerase
+----- Thermocycling Program		string			Thermocycling program used in PCR
+----- Number of Cycles		posInt			PCR number of cycles
+----- Forward Primer Sequence		string			Sequence of forward primer
+----- Reverse Primer Sequence		string			Sequence of reverse primer
+----- Primer Concentration		measurement(ng)			Concentration of primer
+----- Product Isolation Protocol		[valueless]			Category -- Product Isolation Protocol
+------ Protocol Description		string			Protocol used for product isolation
+------ Post PCR Size Selection		enum(Gel Purification, Pippin prep, SPRI bead)			Size selection after the PCR
+------* Protocol Documents		numItems			Items -- Product Isolation Protocol Documents
+------*- Protocol File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+------*-- Protocol File		fileUrl			URL to protocol document file
+------*-- File Description		string			Protocol document file description
+-----* References		numItems			Items -- Protocol References
+-----*- Reference ID		autoID(EXR, uniqAlphaNum, REF)		TRUE	Reference ID
+-----*-- PubMed ID		posInt			PubMed ID of reference
+-----*-- DOI		url 			Digitial Object Identifier of the protocol reference
+-----*-- Other URL		url 			Other URL of the protocol reference
+---- DNA Quantification Method		enum(Picogreen, Bioanalyzer, Nanodrop, Qubit, Other)		TRUE	Method Used for Quantification of DNA (Picoogreen, Bioanalyzer, Nanodrop, Qubit, or Other)
+----- Other DNA Quantification Method		string			Other method used for quantification of DNA, if not listed
+----* Bioanalyzer Profile Images		numItems			Items -- Bioanalyzer Profiles
+----*- Bioanalyzer File ID		autoID(EXR, uniqAlphaNum, FL)		TRUE	File ID - to be assigned by server
+----*-- Bioanalyzer File		fileUrl			URL to Bioanalyzer profile of library (uploaded image)
+----*-- File Description		string			Bioanalyzer image file description
+--- Notes		string			Additional notes about this smRNA-seq protocol
+* Aliases		numItems			Items -- Aliases
+*-  Accession		string		TRUE	Alias Accession ID of this experiment in other databases (Example: SRA, GEO)
+*-- dbName		enum(SRA, GEO, DDBJ, ENCODE, dbGaP)			Database name of alias (SRA, GEO, DDBJ, ENCODE, dbGaP)
+*-- URL		url			URL that points to this experiment in alias database
+* Custom Metadata		numItems			Custom metadata fiels defined by users
+*- Property Name		string		TRUE	Name of the metadata property
+*-- Value		string			Value of this additonal metadata property
+*-- Notes		string			Additional notes about this metadata property and value

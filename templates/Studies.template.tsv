@@ -1,0 +1,32 @@
+#property	value	domain	default	required	description
+Study		autoID(EXR, uniqAlphaNum, ST)			Document Describing Information About This Sequencing Study; Study ID
+- Status		enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate, Embargo)	Add	TRUE	Status of the document
+- Title		string		TRUE	"A short, unique title of this analysis set"
+- Type		enum(Whole Genome Sequencing, Metagenomics, Transcriptome Analysis, Resequencing, Epigenetics, Synthetic Genomics, Forensic or Paleogenomics, Gene Regulation Study, Cancer Genomics, Population Genomics, RNA-seq, Exome Sequencing, Small RNA-seq, Pooled Clone Sequencing, Other)	Small RNA-seq	TRUE	"The Type presents a controlled vocabulary for expressing the overall purpose of the Study: Transcriptome Analysis, Whole Genome sequencing, Metagenomics, Epigenetics, etc."
+-- Other Type		string			Put Type of Study here if you chose Other above
+- Abstract		string		TRUE	"Briefly describes the goals, purpose, and scope of the Study"
+* Authors		numItems		TRUE	Items -- List of Authors Who Contributed to This Study - PI should be listed here along with other contributors
+*- Author Name		string		TRUE	Author name
+*-- Role		enum(PI, Co-PI, Submitter, Member)			Role of the person in this Study
+- Overall Design		string			"Description of the Study including (but not limited to) number of samples, if reference and/or control samples are included, if replicates are included in this study, etc."
+- Notes		string			Additional Notes about this Study
+- IRB Consent Process		[valueless]			Category -- IRB Consent Process Checklist
+-- Is Form Valid		enum(Yes, No, Unknown)			Is Form Valid
+-- Is Consent Obtained		enum(Yes, No, Unknown)			Is Consent Obtained
+-- Consent Date		date			Consent Date
+-- Consent Form Attachment		fileUrl			Upload Encrypted Consent Forms
+- Anticipated Data Repository		enum(GEO, dbGaP, Both GEO & dbGaP, Other)			"Anticipated Data Repository - like dbGaP, GEO, both dbGaP and GEO or other"
+-- Other Data Repository		string			Specify Other data repository
+-- Project registered by PI with dbGaP?		enum(Yes, No)			Project registered by PI with dbGap (Yes or No?) 
+--- All data and metadata submitted to dbGaP?		enum(Yes, No)			All data and metadata submitted to dbGaP? (Yes or No?) 
+* References		numItems			Items -- Reference Publications
+*- PubMed ID		pmid		TRUE	PubMed ID of reference
+* Other References		numItems			Items -- Other Reference not archived in PubMed
+*- Reference		labelUrl		TRUE	Describe the reference
+* Related Submissions		numItems		TRUE	Items -- Related Submission Documents 
+*- Related Submission		regexp(EXR-[a-zA-Z0-9]{6,}-SU)		TRUE	ID of related Submission document
+*-- DocURL		url			"Relative ID (accession) of doc, provide Document URL"
+* Aliases		numItems			Items -- Aliases
+*- Accession		string		TRUE	"Alias Accession ID of this Study in other databases (Example: SRA, GEO)"
+*-- dbName		enum(SRA, GEO, DDBJ, ENCODE, dbGaP, EBI)			"Database name of alias (SRA, GEO, DDBJ, ENCODE, dbGaP)"
+*-- URL		url			URL that points to this Study in alias database

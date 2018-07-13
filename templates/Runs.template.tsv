@@ -1,0 +1,25 @@
+#property	value	domain	default	required	description
+Run		autoID(EXR, uniqAlphaNum, RU)			Document Describing Information About the Sequencing Run, Including Raw Data Files; Run ID
+- Status		enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate)	Add	TRUE	Status of the document
+- Experimental Design		string		TRUE	Description of experimental design
+- Type		enum(small RNA-Seq, qPCR)			Type of experiment - Small RNA-seq or qPCR
+-- small RNA-Seq		[valueless]			Category -- small RNA-seq
+--- Sequencing Instrument		bioportalTerms((EFO,http://www.ebi.ac.uk/efo/EFO_0000001),(OBI,http://purl.obolibrary.org/obo/OBI_0000832))		TRUE	Name and model of the sequencing instrument. This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all types of sequencing instruments (Example: Illumina2500, Illumina2000, IonTorrent, IonProton, MiSeq, Solid, 454).
+---- Other		string			If 'other', can provide name of instrument here.
+---- Instrument Description URL		url			URL related to description of the sequencing instrument
+---* Flowcells		numItems			Items -- Flowcell Details
+---*- Flowcell ID		string		TRUE	Flowcell ID
+---*-- Machine Name		string			Lab specific name of the sequencing instrument
+---*-- Lane		string			Lanes used for sequencing the run
+--- Experiment Details		[valueless]		TRUE	Category -- Experiment Details
+---- Directionality		enum(Strand-specific, Non-strand-specific)		TRUE	Strand specificity of the run
+---- Run Type		enum(Single-end, Paired-end)		TRUE	Type of run, single end or paired end
+---- Maximum Read length		measurement(nt)		TRUE	Length of reads in base pairs or nt
+- Notes		string			Additional Notes about this Run
+* Related Studies		numItems		TRUE	Items -- Related Study Documents 
+*- Related Study		regexp(EXR-[a-zA-Z0-9]{6,}-ST)		TRUE	ID of related Study document
+*-- DocURL		url			Relative ID (accession) of doc, provide Document URL
+* Aliases		numItems			Items -- Aliases
+*- Accession		string		TRUE	Alias Accession ID of this run in other databases (Example: SRA, GEO)
+*-- dbName		enum(SRA, GEO, DDBJ, ENCODE, dbGaP)			Database name of alias (SRA, GEO, DDBJ, ENCODE, dbGaP)
+*-- URL		url			URL that points to this run in alias database

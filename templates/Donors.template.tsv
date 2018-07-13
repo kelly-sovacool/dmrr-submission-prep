@@ -1,0 +1,32 @@
+#property	value	domain	default	required	description
+Donor		autoID(EXR, uniqAlphaNum, DO)			Document Describing Information About the Donors; Donor ID
+- Status		enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate)	Add	TRUE	Status of the document
+- Sex		bioportalTerms((SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/429019009),(SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/365873007))		TRUE	Gender of sample donor (Example: Male, Female, Gender unknown). This field is a look-ahead search box that connects to BioPortal and provides the correct ontology term for gender.
+- Ethnic Group		bioportalTerm(http://data.bioontology.org/search?ontology=NCIT&subtree_root=http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C16564)			The ethnicity of the donor
+- Racial Category		bioportalTerm(http://data.bioontology.org/search?ontology=NCIT&subtree_root=http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C17049)			The racial category of the donor
+- Donor Type		enum(Experimental, Control, Healthy Subject)		TRUE	Sample type (experimental sample or control sample)
+- Health Status		[valueless]			Category -- Health Status
+-- Current Health Status		string			Current health status of the donor at the time of collection
+-- Medical History		string			Prior malignancies, heart diseases, any other related disease conditions
+-- Smoking History		string			Smoking history, if available
+-- Medications		string			Medications used, if available
+-- Treatment History		string			Treatment history of patient
+-- Family History		string			Family history - Details of family members with related health/disease conditions
+- Age		measurement(years)		TRUE	The age of the donor at the time of entry into this database.
+-- Developmental Stage		bioportalTerm(http://data.bioontology.org/search?ontology=EFO&subtree_root=http%3A%2F%2Fwww.ebi.ac.uk%2Fefo%2FEFO_0000399)			Life stage of the sample donor (Example: fetus, neonate, adult, embryo stage, postnatal). This field is a look-ahead search box that connects to BioPortal and retrieves a list with correct ontology terms for various developmental stages.
+- Has Expired?		enum(Yes, No)			Is the patient alive or dead?
+-- Estimated Date		date			If the patient donor has expired, provide estimated date of death
+-- Post-mortem Interval		measurement(hours)			Time elapsed since the donor's death
+- Notes		string			Additional notes about donor
+* Family Members		numItems			Items -- Family Members - Related Documents â€“ List of Related Samples
+*- Family Member		regexp(EXR-[a-zA-Z0-9]{6,}-DO)		TRUE	ID of Sample document of biological parents or sibling donor that has at lease one parent in common or identical twin donor who shares same genetic material, if known
+*-- Relationship		bioportalTerm(http://data.bioontology.org/search?ontology=SNOMEDCT&subtree_root=http%3A%2F%2Fpurl.bioontology.org%2Fontology%2FSNOMEDCT%2F125677006)			Relation type (Example: Mother, Father, Brother, Sister, Identical twin). This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all possible relation types.
+*-- DocURL		url			Relative ID (accession) of doc - provide Document URL
+* Aliases		numItems			Items -- Aliases
+*-  Accession		string		TRUE	Alias Accession ID of this Biosample in other databases (Example: SRA, GEO)
+*-- dbName		enum(SRA, GEO, DDBJ, ENCODE, dbGaP)			Database name of alias (SRA, GEO, DDBJ, ENCODE, dbGaP)
+*-- URL		url			URL that points to this Biosample in alias database
+* Custom Metadata		numItems			Custom metadata fiels defined by users
+*- Property Name		string		TRUE	Name of the metadata property
+*-- Value		string			Value of this additonal metadata property
+*-- Notes		string			Additional notes about this metadata property and value

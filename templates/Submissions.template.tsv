@@ -1,0 +1,33 @@
+#property	value	domain	default	required	description
+Submission		autoID(EXR, uniqAlphaNum, SU)			Document Describing Information About the Submission; Submission ID
+- Status		enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate)	Add	TRUE	Status of the document
+- Submitter		regexp(EXR-[A-Z0-9]{6}-SUB)		TRUE	Category -- Submitter
+-- First Name		string		TRUE	Submitter's first name
+-- Last Name		string		TRUE	Submitter's last name
+-- Email		regexp(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$)		TRUE	Email address of Submitter
+- Date		date			Date of submission
+- Last Update Date		date		TRUE	Date of last update
+- Comment		string			Any comments relevant to this submission
+- Principal Investigator		regexp(EXR-[A-Z0-9]{6}-PI)		TRUE	Category -- Principal Investigator
+-- First Name		string		TRUE	First Name of the Primary Investigator
+-- Last Name		string		TRUE	Last Name of the Primary Investigator
+-- Email		regexp(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$)		TRUE	Email address of the Primary Investigator
+- Funding Source		string	NIH Common Fund	TRUE	List of funding source(s)
+-- Grant Details		enum(1U01HL126493-01,1U01HL126494-01,1U01HL126495-01,1U01HL126496-01,1U01HL126497-01,1U01HL126499-01,1U19CA179512-01,1U19CA179513-01,1U19CA179514-01,1U19CA179563-01,1U19CA179564-01,1U54DA036134-01,1UH2TR000875-01,1UH2TR000880-01,1UH2TR000884-01,1UH2TR000888-01,1UH2TR000890-01,1UH2TR000891-01,1UH2TR000901-01,1UH2TR000902-01,1UH2TR000903-01,1UH2TR000906-01,1UH2TR000914-01,1UH2TR000918-01,1UH2TR000921-01,1UH2TR000923-01,1UH2TR000928-01,1UH2TR000931-01,1UH2TR000933-01,1UH2TR000943-01,3U01HL126493-02S1,3U01HL126494-01S1,3U01HL126494-02S1,3U01HL126496-02S1,3U01HL126499-02S1,3U19CA179512-02S1,3U19CA179514-02S1,3U19CA179563-02S1,3U19CA179563-02S2,3U54DA036134-03S1,3UH2TR000914-02S1,3UH2TR000914-03S1,4UH3TR000875-03,4UH3TR000880-03,4UH3TR000884-03,4UH3TR000888-03,4UH3TR000890-03,4UH3TR000891-03,4UH3TR000901-03,4UH3TR000903-03,4UH3TR000906-03,4UH3TR000918-03,4UH3TR000921-03,4UH3TR000923-03,4UH3TR000931-03,4UH3TR000933-03,4UH3TR000943-03,5U01HL126493-02,5U01HL126494-02,5U01HL126495-02,5U01HL126496-02,5U01HL126497-02,5U01HL126499-02,5U19CA179512-02,5U19CA179512-03,5U19CA179513-02,5U19CA179513-03,5U19CA179514-02,5U19CA179514-03,5U19CA179563-02,5U19CA179563-03,5U19CA179564-02,5U19CA179564-03,5U54DA036134-02,5U54DA036134-03,5UH2TR000875-02,5UH2TR000880-02,5UH2TR000884-02,5UH2TR000888-02,5UH2TR000890-02,5UH2TR000891-02,5UH2TR000901-02,5UH2TR000902-02,5UH2TR000902-03,5UH2TR000903-02,5UH2TR000906-02,5UH2TR000914-02,5UH2TR000918-02,5UH2TR000921-02,5UH2TR000923-02,5UH2TR000928-02,5UH2TR000928-03,5UH2TR000931-02,5UH2TR000933-02,5UH2TR000943-02,7UH2TR000914-03,Non-ERCC Funded Study)		TRUE	List of exRNA grants; Choose Non-ERCC Funded Study if your grant does not fall under the list of Common Fund ERCC Grants. Provide more information in the Notes.
+- Organization		string		TRUE	Name of organization/institute
+- Lab Name		string			Name of lab
+- Address		[valueless]			Lab Address
+-- Street Address		string			Lab address
+-- City		string			City
+-- State		bioportalTerms((SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/224037005),(NCIT,http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C30010))			"State - type the full name or 2-letter code of a US State. This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all states in the USA. For non-US states, leave this field blank and enter state name in the sub-property ""Other State"""
+--- Other State		string			Name of foreign state if state cannot be found
+-- Zip		int			Zip code
+-- Country		bioportalTerm(http://data.bioontology.org/search?ontology=SNOMEDCT&subtree_root=http%3A%2F%2Fpurl.bioontology.org%2Fontology%2FSNOMEDCT%2F223496003)	United States of America		Country - type the full name of the country. This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all countries in the world.
+-- Phone		string			Contact phone number (with country code)
+-- Fax		string			Fax number (with country code)
+-- Website		url			Lab website URL
+- Notes		string			Additional notes about this Submission
+* Aliases		[valueless]			Items -- Aliases
+*- Accession		string		TRUE	"Alias Accession ID of this Submission in other databases (Example: SRA, GEO)"
+*-- dbName		enum(SRA, GEO, DDBJ, ENCODE, dbGaP)			"Database name of alias (SRA, GEO, DDBJ, ENCODE, dbGaP)"
+*-- URL		url			URL that points to this Submission in alias database

@@ -1,0 +1,22 @@
+{
+  "studyName": "",
+  "userLogin": "",
+  "md5CheckSum": "",
+  "runMetadataFileName": "",
+  "submissionMetadataFileName": "",
+  "studyMetadataFileName": "",
+  "experimentMetadataFileName": "",
+  "biosampleMetadataFileName": "",
+  "donorMetadataFileName": "",
+  "manifest": 
+  [
+    {
+      "sampleName": "",
+      "dataFileName": ""
+    }
+  ],
+  "settings":
+  { 
+    "analysisName": ""
+  }
+}

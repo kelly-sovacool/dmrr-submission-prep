@@ -1,0 +1,73 @@
+#property	value	domain	default	required	description
+Biosample		autoID(EXR, uniqAlphaNum, BS)			Document Describing Information About the Biosamples; Biosample ID
+- Status		enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate)	Add	TRUE	Status of the document
+- Name		string		TRUE	Name of the sample
+- Description		string			A plain text description of the biosample. Do not include experiment details, constructs or treatments.
+- Donor ID		regexp(EXR-[a-zA-Z0-9]{6,}-DO)		TRUE	ID of related donor document
+-- DocURL		url			Relative ID (accession) of Donor ID doc, provide Document URL
+-- Age at Sampling		measurement(years)			The age or age-range of the donor at the time of collection (years for postnatal, gestational age in weeks for prenatal)
+-- Notes		string			Additional notes about donor
+- Biological Sample Elements		[valueless]		TRUE	Category -- Elements in Biological Sample
+-- Species		[valueless]		TRUE	Category -- Species
+--- Scientific Name		bioportalTerm(http://data.bioontology.org/search?ontology=NCBITAXON&subtree_root=http%3A%2F%2Fpurl.bioontology.org%2Fontology%2FNCBITAXON%2F40674)	Homo sapiens	TRUE	Scientific name of sample that distinguishes its taxonomy. This field is a look-ahead search box that connects to BioPortal, so start typing the biological name of the organism (Example: Homo sapiens, Mus musculus).
+--- Common Name		enum(Human, Mouse, Rat)	Human		GenBank common name of the organism
+--- Taxon ID		posInt	9606		Taxonomy ID
+-- Disease Type		bioportalTerms((DOID,http://purl.obolibrary.org/obo/DOID_4),(NCIT,http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C7057),(NCIT,http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C94342))		TRUE	Enter first few characters of disease name. This field is a look-ahead search box that connects to DOID Ontology and retrieves a list of all disease terms. User selects the appropriate ontology concept for the disease from that list. Type "Healthy Subject", if sample was taken from a healthy donor.
+--- Symptoms		string			Symptoms of the disease
+--- Pathology		string			Disease pathology
+--- Disease Duration		string			Duration of the disease
+-- Anatomical Location		bioportalTerms((SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/91689009),(SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/272524002),(SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/410652009),(SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/398236008))		TRUE	Details about the anatomical location from which the fluid was collected. This field is a look-ahead search box that connects to SNOMEDCT Ontology and retrieves a list of correct ontology terms for all possible anatomical locations.
+-- Biological Fluid		[valueless]			Category -- Biological Fluid
+--- Biofluid Name		bioportalTerms((SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/91720002),(MESH,http://purl.bioontology.org/ontology/MESH/D017077),(SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/258607008),(NCIT,http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C52556))		TRUE	Source of body fluid of sample. This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all possible biological fluids (Example: Serum, Plasma, Saliva, Sweat, Urine, Tears, Bile, Breast Milk, Cerebrospinal fluid).
+--- Collection Details		[valueless]			Category -- Collection Details
+---- Sample Collection Method		bioportalTerm(http://data.bioontology.org/search?ontology=SNOMEDCT&subtree_root=http%3A%2F%2Fpurl.bioontology.org%2Fontology%2FSNOMEDCT%2F71388002)		TRUE	Description of sample collection method. This field is a look-ahead search box that retrieves a list of correct ontology terms from SNOMEDCT Ontology for all possible fluid collection methods (Example: Venipuncture, Urine specimen obtained by clean catch procedure, Catheter).
+---- Geographic Location		string			Geographic location of the sample donor
+---- Collection Date		date			Date of sample collection
+---- Time of Collection		timestamp			Time of day when the biofluid sample was collected
+---- Collection Tube Type		enum(Red top tube (no additive), EDTA tube, Citrate tube, SST, Li-Heparin GST, Other)		TRUE	Sample collection tube type: Red top tube (no additive), EDTA tube, Citrate tube, SST, Li-Heparin GST, Other
+----- Other Collection Tube Type		string			Other type of collection tube, if not listed
+---- Holding Time		measurement(minutes)			Storage time
+---- Holding Temperature		measurement(C)			Storage temperature
+---- Preservatives Used		string			Preservatives used for storing samples
+---- Freezing Method		string			Method of freezing
+---- Number of Times Freeze Thawed		int			The number of times the sample was freeze thawed
+---- Contamination Removal Method		string			Method used for removal of contaminating cells
+--- Notes		string			Additional notes about sample's collection method from biological fluid
+-- Cell Culture Supernatant		[valueless]			Category â€“ Cell Culture Supernatant
+--- Source		bioportalTerm(http://data.bioontology.org/search?ontology=NCIT&subtree_root=http%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23C19157)		TRUE	Source of cell culture. This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all possible cell culture sources (Example: Fetal Tissue, Tumor Tissue).
+---- Type		bioportalTerms((EFO,http://purl.obolibrary.org/obo/BTO_0000214),(EFO,http://www.ebi.ac.uk/efo/EFO_0000324),(CL,http://purl.obolibrary.org/obo/GO_0005623))		TRUE	If source material is cell culture supernatant, describe the type of cell culture. This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all possible types of cell cultures (Example: Embryonic stem cell, induced pluripotent stem cell, Mesenchymal stem cell, cancer cell line).
+---- Cell Line		bioportalTerms((CLO,http://purl.obolibrary.org/obo/CLO_0000001),(EFO,http://www.ebi.ac.uk/efo/EFO_0000322),(NCIT,http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C16403))			Name of cell line from Cell Line Ontology
+---- Start Date		date			Start date of cell culture
+---- Harvest Date		date			Date when the culture was harvested
+--- Tissue		bioportalTerm(http://data.bioontology.org/search?ontology=UBERON&subtree_root=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FUBERON_0000061)		TRUE	Select source of tissue. This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all possible tissues (Example: Adipose, Adrenal, Aorta, Bladder, Blood, Brain, Breast, Cell Line Control, Cervix, Chondrocyte, Colon, Diaphragm, Duodenum, Endometrial, Fallopian Tube, Gall bladder, Heart, Kidney, Large Intestine, Liver, Lung, Lymph Node, Ovary, Pancreas, Placenta, Prostate, Rectal, Skeletal muscle, Skin, Small intestine, Smooth muscle, Spinal Cord, Spleen, Stomach, Testis, Thymus, Thyroid, Tongue, Umbilical cord, Ureter)
+---- Date Obtained		date			Date when the tissue was obtained
+---- Tissue Type		bioportalTerms((EFO,http://purl.obolibrary.org/obo/OBI_0100051),(SNOMEDCT,http://purl.bioontology.org/ontology/SNOMEDCT/119376003))		TRUE	Select type of tissue.  This field is a look-ahead search box that connects to BioPortal and retrieves a list of correct ontology terms for all possible types of tissues (Example: Fresh, frozen, formalin-fixed paraffin-embedded (FFPE))
+--- Notes		string			Additional notes about sample's collection method from cell culture supernatant
+-- Starting Amount		string		 	The initial quantity of cells or tissues obtained
+-- Replicate Information		string			Category -- Replicate Information
+--- Biological Replicate Number		int	0		Data collection under the same methods using a different biological source, measuring the variability in the biological source.
+--- Technical Replicate Number		int	0		Data collection under the same methods using the same biological source, measuring the variability in the method.
+-- Provider		string			Category -- Provider of Biosample
+--- Company Name		string			The name of the company that provided the biological material
+--- Lab Name		string			The name of the laboratory that provided the biological material
+--- Person Name		string			The name of the person that provided the biological material
+-- Notes		string			Additional notes about Biological Sample Elements
+- Molecular Sample Elements		[valueless]		TRUE	Category -- Molecular Sample Elements
+-- exRNA Source		enum(extracellular exosome, extracellular vesicle, HDL-containing protein-lipid-RNA complex, total cell-free biofluid RNA, ribonucleoprotein complex, protein-lipid-RNA complex, LDL-containing protein-lipid-RNA complex, apoptotic body)		TRUE	Details of exRNA source material
+-- Fractionation		enum(Yes, No)		TRUE	Fractionated - yes or no? No implies that total exRNA was used.
+-- Notes		string			Additional Notes about Molecular Sample Elements
+* Related Experiments		numItems		TRUE	Items -- Related Experiment Documents 
+*- Related Experiment		regexp(EXR-[a-zA-Z0-9]{6,}-EX)		TRUE	ID of related experiment document
+*-- DocURL		url			Relative ID (accession) of doc, provide Document URL
+* Aliases		numItems			Items -- Aliases
+*-  Accession		string		TRUE	Alias Accession ID of this Biosample in other databases (Example: SRA, GEO)
+*-- dbName		enum(SRA, GEO, DDBJ, ENCODE, dbGaP)			Database name of alias (SRA, GEO, DDBJ, ENCODE, dbGaP)
+*-- URL		url			URL that points to this Biosample in alias database
+*-- Date Submitted to External Database		date			Date submitted to external public domain database
+* Pooled Biosamples		numItems			Items -- Pooled Samples - Related documents â€“ List of Related Samples
+*- Pooled Biosample		regexp(EXR-[a-zA-Z0-9]{6,}-[BS|DO])		TRUE	ID of Biosample document from which this sample is pooled
+*-- DocURL		url			Relative ID(accession) of pooled sample doc, provide Document URL
+* Custom Metadata		numItems			Custom metadata fiels defined by users
+*- Property Name		string		TRUE	Name of the metadata property
+*-- Value		string			Value of this additonal metadata property
+*-- Notes		string			Additional notes about this metadata property and value

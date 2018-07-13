@@ -1,0 +1,349 @@
+MT.Unique.ID,Sample.ID,Participant.ID,Study,Age,Gender,Race,Collection.Date,Source,Library.Generation.Set,Index,MiSeq.QC.Run,MISEQ.QC.PASS
+1,70014,70014,Healthy Controls,23,Male,Asian,5/9/2002,Plasma,Set 1a,Index1,Run1,PASS
+2,70016,70016,Healthy Controls,39,Male,White,5/3/2002,Plasma,Set 1a,Index2,Run1,PASS
+3,70028,70028,Healthy Controls,33,Female,White,5/8/2002,Plasma,Set 1a,Index3,Run1,PASS
+4,70029,70029,Healthy Controls,27,Female,Black or African American,5/14/2002,Plasma,Set 1a,Index4,Run1,PASS
+5,70038,70038,Healthy Controls,22,Female,White,6/6/2002,Plasma,Set 1a,Index5,Run1,PASS
+6,70057,70057,Healthy Controls,31,Male,Asian,5/21/2002,Plasma,Set 1a,Index6,Run1,PASS
+7,70067,70067,Healthy Controls,29,Male,White,5/20/2002,Plasma,Set 1a,Index7,Run1,PASS
+8,70082,70082,Healthy Controls,24,Male,White,5/28/2002,Plasma,Set 1a,Index8,Run1,PASS
+9,70092,70092,Healthy Controls,25,Male,Asian,6/10/2002,Plasma,Set 1a,Index9,Run1,PASS
+10,70103,70103,Healthy Controls,22,Male,Asian,6/20/2002,Plasma,Set 1a,Index10,Run1,PASS
+11,70105,70105,Healthy Controls,40,Male,White,5/22/2002,Plasma,Set 1a,Index11,Run1,PASS
+12,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 1a,Index12,Run1,PASS
+13,70114,70114,Healthy Controls,24,Female,Asian,5/21/2002,Plasma,Set 1b,Index13,Run1,FAIL
+14,70125,70125,Healthy Controls,30,Female,White,7/11/2002,Plasma,Set 1b,Index14,Run1,PASS
+15,70182,70182,Healthy Controls,33,Female,White,5/20/2002,Plasma,Set 1b,Index15,Run1,PASS
+16,70283,70283,Healthy Controls,21,Female,Asian,6/21/2002,Plasma,Set 1b,Index16,Run1,PASS
+17,70287,70287,Healthy Controls,26,Female,Asian,5/28/2002,Plasma,Set 1b,Index17,Run1,PASS
+18,70348,70348,Healthy Controls,27,Female,Black or African American,7/15/2002,Plasma,Set 1b,Index18,Run1,PASS
+19,70362,70362,Healthy Controls,33,Female,Asian,7/1/2002,Plasma,Set 1b,Index19,Run1,PASS
+20,70406,70406,Healthy Controls,29,Male,White,7/16/2002,Plasma,Set 1b,Index20,Run1,PASS
+21,70416,70416,Healthy Controls,31,Male,White,7/15/2002,Plasma,Set 1b,Index21,Run1,PASS
+22,70435,70435,Healthy Controls,24,Female,White,7/15/2002,Plasma,Set 1b,Index22,Run1,PASS
+23,70467,70467,Healthy Controls,35,Male,White,8/19/2002,Plasma,Set 1b,Index23,Run1,PASS
+24,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 1b,Index24,Run1,PASS
+25,70484,70484,Healthy Controls,33,Male,White,8/13/2002,Plasma,Set 2,Index25,Run1,PASS
+26,70498,70498,Healthy Controls,23,Female,White,9/5/2002,Plasma,Set 2,Index26,Run1,PASS
+27,70510,70510,Healthy Controls,37,Female,Asian,8/19/2002,Plasma,Set 2,Index27,Run1,PASS
+28,70539,70539,Healthy Controls,24,Female,Asian,9/13/2002,Plasma,Set 2,Index28,Run1,PASS
+29,70548,70548,Healthy Controls,31,Male,White,9/24/2002,Plasma,Set 2,Index29,Run1,PASS
+30,70549,70549,Healthy Controls,32,Male,Black or African American,10/15/2002,Plasma,Set 2,Index30,Run1,PASS
+31,70557,70557,Healthy Controls,20,Male,Native Hawiian or other Pacific Islander,10/4/2002,Plasma,Set 2,Index31,Run1,PASS
+32,70581,70581,Healthy Controls,38,Male,Asian,10/22/2002,Plasma,Set 2,Index32,Run1,PASS
+33,70583,70583,Healthy Controls,20,Male,White,10/25/2002,Plasma,Set 2,Index33,Run1,PASS
+34,70695,70695,Healthy Controls,29,Female,Asian,11/25/2002,Plasma,Set 2,Index34,Run1,PASS
+35,70716,70716,Healthy Controls,22,Female,White,12/10/2002,Plasma,Set 2,Index35,Run1,PASS
+36,70831,70831,Healthy Controls,30,Female,White,1/24/2003,Plasma,Set 2,Index36,Run1,PASS
+37,70956,70956,Healthy Controls,27,Female,White,2/25/2003,Plasma,Set 2,Index37,Run1,PASS
+38,70977,70977,Healthy Controls,24,Female,White,3/14/2003,Plasma,Set 2,Index38,Run1,PASS
+39,71004,71004,Healthy Controls,21,Female,Pacific Islander,4/9/2003,Plasma,Set 2,Index39,Run1,PASS
+40,71039,71039,Healthy Controls,28,Male,White,3/3/2003,Plasma,Set 2,Index40,Run1,PASS
+41,71080,71080,Healthy Controls,26,Female,White,2/25/2003,Plasma,Set 2,Index42,Run1,PASS
+42,71121,71121,Healthy Controls,21,Female,Asian,4/9/2003,Plasma,Set 2,Index43,Run1,PASS
+43,71134,71134,Healthy Controls,22,Female,White,4/8/2003,Plasma,Set 2,Index44,Run1,PASS
+44,71138,71138,Healthy Controls,25,Male,White,4/11/2003,Plasma,Set 2,Index45,Run1,PASS
+45,71154,71154,Healthy Controls,26,Male,Asian,4/10/2003,Plasma,Set 2,Index46,Run1,PASS
+46,71229,71229,Healthy Controls,34,Male,White,4/7/2003,Plasma,Set 2,Index47,Run1,PASS
+47,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 2,Index48,Run1,PASS
+48,71244,71244,Healthy Controls,30,Male,White,4/9/2003,Plasma,Set 3,Index1,Run2,PASS
+49,71263,71263,Healthy Controls,37,Female,White,5/5/2003,Plasma,Set 3,Index2,Run2,PASS
+50,71305,71305,Healthy Controls,24,Female,White,6/25/2003,Plasma,Set 3,Index3,Run2,PASS
+51,71311,71311,Healthy Controls,23,Male,White,6/13/2003,Plasma,Set 3,Index4,Run2,FAIL
+52,71316,71316,Healthy Controls,23,Male,White,6/2/2003,Plasma,Set 3,Index5,Run2,PASS
+53,71337,71337,Healthy Controls,27,Female,White,6/16/2003,Plasma,Set 3,Index6,Run2,PASS
+54,71346,71346,Healthy Controls,28,Male,White,8/12/2003,Plasma,Set 3,Index7,Run2,PASS
+55,71358,71358,Healthy Controls,40,Female,Asian,7/31/2003,Plasma,Set 3,Index8,Run2,PASS
+56,71367,71367,Healthy Controls,26,Female,White,6/23/2003,Plasma,Set 3,Index9,Run2,PASS
+57,71387,71387,Healthy Controls,25,Female,Asian,6/30/2003,Plasma,Set 3,Index10,Run2,PASS
+58,71398,71398,Healthy Controls,30,Female,White,7/29/2003,Plasma,Set 3,Index11,Run2,PASS
+59,71431,71431,Healthy Controls,40,Male,Asian,8/15/2003,Plasma,Set 3,Index12,Run2,PASS
+60,71438,71438,Healthy Controls,35,Male,Asian,8/15/2003,Plasma,Set 3,Index13,Run2,PASS
+61,71443,71443,Healthy Controls,25,Female,White,8/21/2003,Plasma,Set 3,Index14,Run2,PASS
+62,71467,71467,Healthy Controls,37,Female,Asian,10/10/2003,Plasma,Set 3,Index15,Run2,PASS
+63,71471,71471,Healthy Controls,29,Female,White,10/20/2003,Plasma,Set 3,Index16,Run2,PASS
+64,71473,71473,Healthy Controls,32,Male,Asian,10/27/2003,Plasma,Set 3,Index17,Run2,PASS
+65,71495,71495,Healthy Controls,31,Female,Asian,10/14/2003,Plasma,Set 3,Index18,Run2,PASS
+66,71521,71521,Healthy Controls,40,Male,White,10/20/2003,Plasma,Set 3,Index19,Run2,PASS
+67,71582,71582,Healthy Controls,32,Female,asian,12/16/2003,Plasma,Set 3,Index20,Run2,PASS
+68,71591,71591,Healthy Controls,34,Female,White,12/16/2003,Plasma,Set 3,Index21,Run2,PASS
+69,71690,71690,Healthy Controls,37,Female,mixed/Asian &Black,1/21/2004,Plasma,Set 3,Index22,Run2,PASS
+70,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 3,Index23,Run2,PASS
+71,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 3,Index24,Run2,PASS
+72,71796,71796,Healthy Controls,41,Male,White,3/9/2004,Plasma,Set 4,Index25,Run2,FAIL
+73,71816,71816,Healthy Controls,39,Female,Asian,3/23/2004,Plasma,Set 4,Index26,Run2,FAIL
+74,71818,71818,Healthy Controls,22,Female,Asian,3/1/2004,Plasma,Set 4,Index27,Run2,FAIL
+75,71843,71843,Healthy Controls,28,Male,White,3/16/2004,Plasma,Set 4,Index28,Run2,FAIL
+76,71856,71856,Healthy Controls,31,Female,asian,4/29/2004,Plasma,Set 4,Index29,Run2,PASS
+77,71875,71875,Healthy Controls,33,Female,white,6/22/2004,Plasma,Set 4,Index30,Run2,PASS
+78,71906,71906,Healthy Controls,33,Female,White,6/29/2004,Plasma,Set 4,Index31,Run2,FAIL
+79,71911,71911,Healthy Controls,22,Male,asian,8/30/2004,Plasma,Set 4,Index32,Run2,PASS
+80,71916,71916,Healthy Controls,39,Female,Black or African American,7/9/2004,Plasma,Set 4,Index33,Run2,PASS
+81,71919,71919,Healthy Controls,38,Female,Black or African American,7/9/2004,Plasma,Set 4,Index34,Run2,PASS
+82,71927,71927,Healthy Controls,29,Male,Asian,9/3/2004,Plasma,Set 4,Index35,Run2,PASS
+83,71940,71940,Healthy Controls,23,Female,White,8/31/2004,Plasma,Set 4,Index36,Run2,PASS
+84,71973,71973,Healthy Controls,22,Male,White,11/16/2004,Plasma,Set 4,Index37,Run2,PASS
+85,71983,71983,Healthy Controls,25,Male,White,1/11/2005,Plasma,Set 4,Index38,Run2,PASS
+86,72049,72049,Healthy Controls,26,Female,Asian,2/22/2005,Plasma,Set 4,Index39,Run2,PASS
+87,72062,72062,Healthy Controls,25,Male,White,3/15/2005,Plasma,Set 4,Index40,Run2,PASS
+88,72078,72078,Healthy Controls,21,Female,Asian,4/5/2005,Plasma,Set 4,Index42,Run2,PASS
+89,72108,72108,Healthy Controls,40,Female,Black or African American,5/17/2005,Plasma,Set 4,Index43,Run2,PASS
+90,72111,72111,Healthy Controls,33,Male,White,6/2/2005,Plasma,Set 4,Index44,Run2,PASS
+91,72114,72114,Healthy Controls,26,Female,White,7/14/2005,Plasma,Set 4,Index45,Run2,PASS
+92,72119,72119,Healthy Controls,36,male,Black or African American,11/29/2005,Plasma,Set 4,Index46,Run2,PASS
+93,72133,72133,Healthy Controls,35,Male,Black or African American,7/8/2005,Plasma,Set 4,Index47,Run2,PASS
+94,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 4,Index48,Run2,PASS
+95,72138,72138,Healthy Controls,22,Female,mixed/asian & white,8/2/2005,Plasma,Set 5,Index1,Run3,FAIL
+96,72148,72148,Healthy Controls,27,Male,"mixed/black, white, asian",7/29/2005,Plasma,Set 5,Index2,Run3,PASS
+97,72165,72165,Healthy Controls,21,Male,asian,8/29/2005,Plasma,Set 5,Index3,Run3,FAIL
+98,72221*,72221*,Healthy Controls,40,Male,Asian,10/28/2005,Plasma,Set 5,Index4,Run3,FAIL
+99,72253*,72253*,Healthy Controls,22,Male,Asian,11/10/2005,Plasma,Set 5,Index5,Run3,PASS
+100,72254*,72254*,Healthy Controls,22,Male,Asian,11/10/2005,Plasma,Set 5,Index6,Run3,PASS
+101,72255*,72255*,Healthy Controls,28,Male,Asian,11/10/2005,Plasma,Set 5,Index7,Run3,FAIL
+102,72316,72316,Healthy Controls,30,Male,Asian,3/2/2006,Plasma,Set 5,Index8,Run3,PASS
+103,72339*,72339*,Healthy Controls,21,Male,Asian,2/24/2006,Plasma,Set 5,Index9,Run3,PASS
+104,72349*,72349*,Healthy Controls,32,Male,Asian,2/23/2006,Plasma,Set 5,Index10,Run3,PASS
+105,72376,72376,Healthy Controls,25,Male,White,3/28/2006,Plasma,Set 5,Index11,Run3,PASS
+106,72397,72397,Healthy Controls,27,Male,Black or African American,4/11/2006,Plasma,Set 5,Index12,Run3,PASS
+107,70014,70014,Healthy Controls,23,Male,Asian,5/9/2002,Serum,Set 5,Index13,Run3,PASS
+108,70016,70016,Healthy Controls,39,Male,White,5/3/2002,Serum,Set 5,Index14,Run3,PASS
+109,70105,70105,Healthy Controls,40,Male,White,5/22/2002,Serum,Set 5,Index15,Run3,PASS
+110,70125,70125,Healthy Controls,30,Female,White,7/11/2002,Serum,Set 5,Index16,Run3,PASS
+111,70182,70182,Healthy Controls,33,Female,White,5/20/2002,Serum,Set 5,Index17,Run3,FAIL
+112,70348,70348,Healthy Controls,27,Female,Black or African American,7/15/2002,Serum,Set 5,Index18,Run3,FAIL
+113,70416,70416,Healthy Controls,31,Male,White,7/15/2002,Serum,Set 5,Index19,Run3,PASS
+114,70435,70435,Healthy Controls,24,Female,White,7/15/2002,Serum,Set 5,Index20,Run3,PASS
+115,70498,70498,Healthy Controls,23,Female,White,9/5/2002,Serum,Set 5,Index21,Run3,PASS
+116,71039,71039,Healthy Controls,28,Male,White,3/3/2003,Serum,Set 5,Index22,Run3,PASS
+117,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 5,Index23,Run3,PASS
+118,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 5,Index24,Run3,PASS
+119,71229,71229,Healthy Controls,34,Male,White,4/7/2003,Serum,Set 6,Index25,Run3,PASS
+120,71244,71244,Healthy Controls,30,Male,White,4/9/2003,Serum,Set 6,Index26,Run3,PASS
+121,71316,71316,Healthy Controls,23,Male,White,6/2/2003,Serum,Set 6,Index27,Run3,PASS
+122,71367,71367,Healthy Controls,26,Female,White,6/23/2003,Serum,Set 6,Index28,Run3,PASS
+123,71431,71431,Healthy Controls,40,Male,Asian,8/15/2003,Serum,Set 6,Index29,Run3,PASS
+124,71438,71438,Healthy Controls,35,Male,Asian,8/15/2003,Serum,Set 6,Index30,Run3,PASS
+125,71467,71467,Healthy Controls,37,Female,Asian,10/10/2003,Serum,Set 6,Index31,Run3,PASS
+126,71473,71473,Healthy Controls,32,Male,Asian,10/27/2003,Serum,Set 6,Index32,Run3,PASS
+127,71521,71521,Healthy Controls,40,Male,White,10/20/2003,Serum,Set 6,Index33,Run3,PASS
+128,71582,71582,Healthy Controls,32,Female,asian,12/16/2003,Serum,Set 6,Index34,Run3,PASS
+129,71591,71591,Healthy Controls,34,Female,White,12/16/2003,Serum,Set 6,Index35,Run3,PASS
+130,71690,71690,Healthy Controls,37,Female,mixed/Asian &Black,1/21/2004,Serum,Set 6,Index36,Run3,PASS
+131,71818,71818,Healthy Controls,22,Female,Asian,3/1/2004,Serum,Set 6,Index37,Run3,PASS
+132,71875,71875,Healthy Controls,33,Female,white,6/22/2004,Serum,Set 6,Index38,Run3,PASS
+133,71906,71906,Healthy Controls,33,Female,White,6/29/2004,Serum,Set 6,Index39,Run3,PASS
+134,72078,72078,Healthy Controls,21,Female,Asian,4/5/2005,Serum,Set 6,Index40,Run3,PASS
+135,72108,72108,Healthy Controls,40,Female,Black or African American,5/17/2005,Serum,Set 6,Index42,Run3,PASS
+136,72111,72111,Healthy Controls,33,Male,White,6/2/2005,Serum,Set 6,Index43,Run3,PASS
+137,72133,72133,Healthy Controls,35,Male,Black or African American,7/8/2005,Serum,Set 6,Index44,Run3,PASS
+138,72165,72165,Healthy Controls,21,Male,asian,8/29/2005,Serum,Set 6,Index45,Run3,PASS
+139,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 6,Index46,Run3,PASS
+140,15894-T0,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index1,Run4,PASS
+141,15894-T1,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index2,Run4,PASS
+142,15894-T2,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index3,Run4,PASS
+143,15894-T3,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index4,Run4,PASS
+144,15894-T4,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index5,Run4,PASS
+145,15894-T5,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index6,Run4,PASS
+146,15894-T6,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index7,Run4,PASS
+147,15894-T7,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index8,Run4,PASS
+148,15894-T8,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index9,Run4,PASS
+149,15894-T9,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index10,Run4,PASS
+150,15894-T10,15894,Feeding Study-30 min,NA,NA,NA,12/11/2013,Plasma,Set 7,Index11,Run4,PASS
+151,15894-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 7,Index12,Run4,PASS
+152,26170-T0,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index13,Run4,PASS
+153,26170-T1,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index14,Run4,PASS
+154,26170-T2,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index15,Run4,PASS
+155,26170-T3,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index16,Run4,PASS
+156,26170-T4,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index17,Run4,PASS
+157,26170-T5,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index18,Run4,PASS
+158,26170-T6,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index19,Run4,PASS
+159,26170-T7,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index20,Run4,PASS
+160,26170-T8,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index21,Run4,PASS
+161,26170-T9,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index22,Run4,PASS
+162,26170-T10,26170,Feeding Study-30 min,NA,NA,NA,1/7/2014,Plasma,Set 7,Index23,Run4,PASS
+163,26170-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 7,Index24,Run4,PASS
+164,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 7,Index25,Run4,PASS
+165,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 7,Index26,Run4,PASS
+166,27566-T0,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index27,Run4,PASS
+167,27566-T1,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index28,Run4,PASS
+168,27566-T2,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index29,Run4,PASS
+169,27566-T3,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index30,Run4,PASS
+170,27566-T4,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index31,Run4,PASS
+171,27566-T5,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index32,Run4,PASS
+172,27566-T6,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index33,Run4,PASS
+173,27566-T7,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index34,Run4,PASS
+174,27566-T8,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index35,Run4,PASS
+175,27566-T9,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index36,Run4,PASS
+176,27566-T10,27566,Feeding Study-30 min,NA,NA,NA,12/16/2013,Plasma,Set 8,Index37,Run4,PASS
+177,27566-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 8,Index38,Run4,PASS
+178,33783-T0,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index39,Run4,PASS
+179,33783-T1,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index40,Run4,PASS
+180,33783-T2,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index42,Run4,PASS
+181,33783-T3,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index43,Run4,PASS
+182,33783-T4,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index44,Run4,PASS
+183,33783-T5,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index45,Run4,PASS
+184,33783-T6,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index46,Run4,PASS
+185,33783-T7,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index47,Run4,PASS
+186,33783-T8,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index48,Run4,PASS
+187,33783-T9,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index1,Run5,PASS
+188,33783-T10,33783,Feeding Study-30 min,NA,NA,NA,12/18/2013,Plasma,Set 8,Index2,Run5,PASS
+189,33783-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 8,Index3,Run5,PASS
+190,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 8,Index4,Run5,PASS
+191,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 8,Index5,Run5,PASS
+192,44388-T0,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index6,Run5,PASS
+193,44388-T1,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index7,Run5,PASS
+194,44388-T2,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index8,Run5,PASS
+195,44388-T3,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index9,Run5,PASS
+196,44388-T4,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index10,Run5,PASS
+197,44388-T5,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index11,Run5,PASS
+198,44388-T6,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index12,Run5,PASS
+199,44388-T7,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index13,Run5,PASS
+200,44388-T8,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index14,Run5,PASS
+201,44388-T9,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index15,Run5,PASS
+202,44388-T10,44388,Feeding Study-30 min,NA,NA,NA,12/10/2013,Plasma,Set 9,Index16,Run5,PASS
+203,44388-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 9,Index17,Run5,PASS
+204,46590-T0,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index18,Run5,PASS
+205,46590-T1,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index19,Run5,PASS
+206,46590-T2,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index20,Run5,PASS
+207,46590-T3,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index21,Run5,PASS
+208,46590-T4,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index22,Run5,PASS
+209,46590-T5,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index23,Run5,PASS
+210,46590-T6,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index24,Run5,PASS
+211,46590-T7,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index25,Run5,PASS
+212,46590-T8,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index26,Run5,PASS
+213,46590-T9,46590,Feeding Study-30 min,NA,NA,NA,12/19/2013,Plasma,Set 9,Index27,Run5,PASS
+214,46590-ULMC Pool 1,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 9,Index28,Run5,PASS
+215,46590-ULMC Pool 2,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 9,Index29,Run5,PASS
+216,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 9,Index30,Run5,PASS
+217,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 9,Index31,Run5,PASS
+218,67680-T0,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index32,Run5,PASS
+219,67680-T1,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index33,Run5,PASS
+220,67680-T2,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index34,Run5,PASS
+221,67680-T3,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index35,Run5,PASS
+222,67680-T4,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index36,Run5,PASS
+223,67680-T5,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index37,Run5,PASS
+224,67680-T6,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index38,Run5,PASS
+225,67680-T7,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index39,Run5,PASS
+226,67680-T8,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index40,Run5,PASS
+227,67680-T9,67680,Feeding Study-30 min,NA,NA,NA,12/30/2013,Plasma,Set 10,Index42,Run5,PASS
+228,67680-ULMC Pool 1,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 10,Index43,Run5,PASS
+229,67680-ULMC Pool 2,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 10,Index44,Run5,PASS
+230,74291-T0,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index45,Run5,PASS
+231,74291-T1,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index46,Run5,PASS
+232,74291-T2,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index47,Run5,PASS
+233,74291-T3,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index48,Run5,PASS
+234,74291-T4,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index1,Run6,PASS
+235,74291-T5,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index2,Run6,PASS
+236,74291-T6,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index3,Run6,PASS
+237,74291-T7,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index4,Run6,PASS
+238,74291-T8,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index5,Run6,PASS
+239,74291-T9,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index6,Run6,PASS
+240,74291-T10,74291,Feeding Study-30 min,NA,NA,NA,12/9/2013,Plasma,Set 10,Index7,Run6,PASS
+241,74291-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 10,Index8,Run6,PASS
+242,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 10,Index9,Run6,PASS
+243,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 10,Index10,Run6,PASS
+244,12671-T0,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index11,Run6,PASS
+245,12671-T1,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index12,Run6,PASS
+246,12671-T2,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index13,Run6,PASS
+247,12671-T3,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index14,Run6,PASS
+248,12671-T4,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index15,Run6,PASS
+249,12671-T5,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index16,Run6,PASS
+250,12671-T6,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index17,Run6,PASS
+251,12671-T7,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index18,Run6,PASS
+252,12671-T8,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index19,Run6,PASS
+253,12671-T9,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index20,Run6,PASS
+254,12671-T10,12671,Feeding Study-1 hr,NA,NA,NA,10/15/2013,Plasma,Set 11,Index21,Run6,PASS
+255,12671-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 11,Index22,Run6,PASS
+256,26245-T0,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index23,Run6,PASS
+257,26245-T1,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index24,Run6,PASS
+258,26245-T2,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index25,Run6,PASS
+259,26245-T3,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index26,Run6,PASS
+260,26245-T4,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index27,Run6,PASS
+261,26245-T5,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index28,Run6,PASS
+262,26245-T6,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index29,Run6,PASS
+263,26245-T7,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index30,Run6,PASS
+264,26245-T8,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index31,Run6,PASS
+265,26245-T9,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index32,Run6,PASS
+266,26245-T10,26245,Feeding Study-1 hr,NA,NA,NA,9/3/2013,Plasma,Set 11,Index33,Run6,PASS
+267,26245-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 11,Index34,Run6,PASS
+268,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 11,Index35,Run6,PASS
+269,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 11,Index36,Run6,PASS
+270,43888-T0,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index37,Run6,PASS
+271,43888-T1,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index38,Run6,PASS
+272,43888-T2,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index39,Run6,PASS
+273,43888-T3,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index40,Run6,PASS
+274,43888-T4,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index42,Run6,PASS
+275,43888-T5,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index43,Run6,PASS
+276,43888-T6,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index44,Run6,PASS
+277,43888-T7,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index45,Run6,PASS
+278,43888-T8,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index46,Run6,PASS
+279,43888-T9,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index47,Run6,PASS
+280,43888-T10,43888,Feeding Study-1 hr,NA,NA,NA,8/20/2013,Plasma,Set 12,Index48,Run6,PASS
+281,43888-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 12,Index1,Run7,PASS
+282,53237-T0,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index2,Run7,PASS
+283,53237-T1,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index3,Run7,PASS
+284,53237-T2,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index4,Run7,PASS
+285,53237-T3,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index5,Run7,PASS
+286,53237-T4,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index6,Run7,PASS
+287,53237-T5,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index7,Run7,PASS
+288,53237-T6,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index8,Run7,PASS
+289,53237-T7,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index9,Run7,PASS
+290,53237-T8,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index10,Run7,PASS
+291,53237-T9,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index11,Run7,PASS
+292,53237-T10,53237,Feeding Study-1 hr,NA,NA,NA,11/25/2013,Plasma,Set 12,Index12,Run7,PASS
+293,53237-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 12,Index13,Run7,PASS
+294,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 12,Index14,Run7,PASS
+295,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 12,Index15,Run7,PASS
+296,55682-T0,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index16,Run7,PASS
+297,55682-T1,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index17,Run7,PASS
+298,55682-T2,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index18,Run7,PASS
+299,55682-T3,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index19,Run7,PASS
+300,55682-T4,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index20,Run7,PASS
+301,55682-T5,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index21,Run7,PASS
+302,55682-T6,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index22,Run7,PASS
+303,55682-T7,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index23,Run7,PASS
+304,55682-T8,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index24,Run7,PASS
+305,55682-T9,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index25,Run7,PASS
+306,55682-T10,55682,Feeding Study-1 hr,NA,NA,NA,7/23/2013,Plasma,Set 13,Index26,Run7,PASS
+307,55682-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 13,Index27,Run7,PASS
+308,67679-T0,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index28,Run7,PASS
+309,67679-T1,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index1,Run8,PASS
+310,67679-T2,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index2,Run8,PASS
+311,67679-T3,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index3,Run8,PASS
+312,67679-T4,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index4,Run8,PASS
+313,67679-T5,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index5,Run8,PASS
+314,67679-T6,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index6,Run8,PASS
+315,67679-T7,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index7,Run8,PASS
+316,67679-T8,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index8,Run8,PASS
+317,67679-T9,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index9,Run8,PASS
+318,67679-T10,67679,Feeding Study-1 hr,NA,NA,NA,9/4/2013,Plasma,Set 13,Index10,Run8,PASS
+319,67679-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 13,Index11,Run8,PASS
+320,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 13,Index12,Run8,PASS
+321,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 13,Index13,Run8,PASS
+322,86712-T0,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index14,Run8,PASS
+323,86712-T1,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index15,Run8,PASS
+324,86712-T2,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index16,Run8,PASS
+325,86712-T3,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index17,Run8,PASS
+326,86712-T4,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index18,Run8,PASS
+327,86712-T5,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index19,Run8,PASS
+328,86712-T6,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index20,Run8,PASS
+329,86712-T7,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index21,Run8,PASS
+330,86712-T8,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index22,Run8,PASS
+331,86712-T9,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index23,Run8,PASS
+332,86712-T10,86712,Feeding Study-1 hr,NA,NA,NA,10/29/2013,Plasma,Set 14,Index24,Run8,PASS
+333,86712-ULMC Pool,ULMC Pool,ULMC Pool,NA,NA,NA,2/17/2017,Plasma,Set 14,Index25,Run8,PASS
+334,miRXplore,NA,NA,NA,NA,NA,3/7/2017,NA,Set 14,Index26,Run8,PASS
+335,Plasma miRNA Pool,NA,NA,NA,NA,NA,3/2/2017,NA,Set 14,Index27,Run8,PASS
+13,70114,70114,Healthy Controls,24,Female,Asian,5/21/2002,Plasma,SetRecheck,Index13,Run9,PASS
+51,71311,71311,Healthy Controls,23,Male,White,6/13/2003,Plasma,SetRecheck,Index4,Run10,PASS
+72,71796,71796,Healthy Controls,41,Male,White,3/9/2004,Plasma,SetRecheck,Index25,Run11,PASS
+73,71816,71816,Healthy Controls,39,Female,Asian,3/23/2004,Plasma,SetRecheck,Index26,Run12,PASS
+74,71818,71818,Healthy Controls,22,Female,Asian,3/1/2004,Plasma,SetRecheck,Index27,Run13,PASS
+75,71843,71843,Healthy Controls,28,Male,White,3/16/2004,Plasma,SetRecheck,Index28,Run14,PASS
+78,71906,71906,Healthy Controls,33,Female,White,6/29/2004,Plasma,SetRecheck,Index31,Run15,PASS
+95,72138,72138,Healthy Controls,22,Female,mixed/asian & white,8/2/2005,Plasma,SetRecheck,Index1,Run16,PASS
+97,72165,72165,Healthy Controls,21,Male,asian,8/29/2005,Plasma,SetRecheck,Index3,Run17,PASS
+98,72221*,72221*,Healthy Controls,40,Male,Asian,10/28/2005,Plasma,SetRecheck,Index16,Run18,PASS
+101,72255*,72255*,Healthy Controls,28,Male,Asian,11/10/2005,Plasma,SetRecheck,Index7,Run19,PASS
+111,70182,70182,Healthy Controls,33,Female,White,5/20/2002,Serum,SetRecheck,Index17,Run20,PASS
+112,70348,70348,Healthy Controls,27,Female,Black or African American,7/15/2002,Serum,SetRecheck,Index18,Run21,PASS

@@ -1,0 +1,6 @@
+study_names:
+  - Healthy Controls
+study_id: EXR-MTEWA1HealthyControls
+dir: healthyCtrl
+md5sum: c3f469160b8c2a40e23a2e2395b9e5c0
+is_time_series: False

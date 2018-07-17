@@ -1,0 +1,15 @@
+group: exrna-mtewa1
+user_login: sovacool
+study_name: U01 Test Study July 2018
+samples_filename: sample_sheet.csv
+sample_study_names:
+  - Feeding Study-30 min
+  - Feeding Study-1 hr
+  - Healthy Controls
+study_id: EXR-MTEWA1TestStudy
+dir: testStudy
+is_time_series: True
+database: hg19_exrna
+md5sum: daec25d670e3bb6b3ab3bbf5733df68c
+fastq_filenames: HealthyControl_and_FeedingStudy_fastq_file.names.txt
+tar_archive: None

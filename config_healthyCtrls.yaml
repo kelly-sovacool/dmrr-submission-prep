@@ -1,6 +1,11 @@
-study_names:
+group: exrna-mtewa1
+user_login: sovacool
+study_name: U01 Healthy Controls July 2018
+samples_filename: HealthyControl_and_FeedingStudy_fastq_file.names.txt
+sample_study_names:
   - Healthy Controls
 study_id: EXR-MTEWA1HealthyControls
 dir: healthyCtrl
 md5sum: c3f469160b8c2a40e23a2e2395b9e5c0
 is_time_series: False
+database: hg19_exrna

@@ -8,7 +8,7 @@ Experiment	EXR-MTEWA1HealthyControls-EX	autoID(EXR, uniqAlphaNum, EX)			Document
 ---- Cell Removal Method		enum(Low speed centrifugation, High speed centrifugation, Filtration)			Method used for cell removal (Low speed centrifugation, High speed centrifugation, Filtration)
 - exRNA Sample Preparation Protocol		[valueless]			Category -- exRNA Sample Preparation Protocol
 -- Protocol Description		string		TRUE	Description of exRNA sample preparation protocol
--- Pre-purification of Extracellular Vesicles	No	enum(Yes, No)		TRUE	Were any steps done to pre-purify extracellular vesicles ΓÇô Yes or No?
+-- Pre-purification of Extracellular Vesicles	No	enum(Yes, No)		TRUE	Were any steps done to pre-purify extracellular vesicles Yes or No?
 -- Spike-in RNAs	No	enum(Yes, No)			Were spike-in RNAs used?
 -- RNA Isolation Method		[valueless]			Category -- RNA Isolation Method
 --- Description		string			Description of RNA isolation method

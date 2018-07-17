@@ -1,5 +1,8 @@
 #!/usr/local/bin/python3
 """ Preparing metadata for submission to the DMRR
+Author: Kelly Sovacool
+Email: sovacool@umich.edu
+Date: July 2018
 
 Usage:
     dmrr_prep.py <config_filename>
@@ -8,7 +11,6 @@ Options:
     -h --help   print this help message
 
 """
-import abc
 import datetime
 import docopt
 import json
@@ -19,12 +21,13 @@ import pprint
 import yaml
 import time
 
+
 # TODO: handle multiple sources -- e.g. separate experiments & biosamples file for plasma & serum, or single file when there's only one source.
 # TODO: time-series custom metadata
 
 
 class Submission:
-    def __init__(self, group, user_login, study_name, samples_filename, sample_study_names, study_id, working_dir, templates_dir, md5sum, is_time_series, database):
+    def __init__(self, group, user_login, study_name, samples_filename, sample_study_names, study_id, working_dir, templates_dir, md5sum, fastq_filenames, is_time_series, database):
         self.group = group
         self.user_login = user_login
         self.study_name = study_name
@@ -41,7 +44,7 @@ class Submission:
 
         with open(os.path.join(templates_dir, 'manifest_template.manifest.json'), 'r') as file:
             self.manifest = json.load(file)
-        self.load_manifest()
+        self.load_manifest(fastq_filenames)
 
         # Strip numbers from the value columns and property indices
         for df in [self.donors, self.biosamples]:
@@ -54,9 +57,9 @@ class Submission:
         with open(working_dir + study_id + '.manifest.json', 'w') as file:
             json.dump(self.manifest, file, indent=4)
 
-    def load_manifest(self):
+    def load_manifest(self, fastq_filenames):
         # Load the list of fastq filenames
-        with open('HealthyControl_and_FeedingStudy_fastq_file.names.txt', 'r') as file:
+        with open(fastq_filenames, 'r') as file:
             sample_filenames = {int(f.split('_')[0]): f.strip() for f in file}  # { MT.Unique.ID: fastq_filename }
 
         # Fill in the manifest
@@ -72,10 +75,10 @@ class Submission:
         self.manifest['submissionMetadataFileName'] = self.study_id + '-SU.metadata.tsv'
         self.manifest['studyMetadataFileName'] = self.study_id + '-ST.metadata.tsv'
         self.manifest['experimentMetadataFileName'] = self.study_id + '-EX.metadata.tsv'
-        self.manifest['biosampleMetadataFileName'] = self.study_id + '-BS.metadata.tsv'
+        self.manifest['biosampleMetadataFileName'] = self.study_id + '-BS.metadata.tsv'  # TODO: different structure for time series data
         self.manifest['donorMetadataFileName'] = self.study_id + '-DO.metadata.tsv'
         self.manifest['manifest'] = list()
-        for mt_unique_id in sorted(self.samples.index):  # only include fastq filenames in this study
+        for mt_unique_id in sorted(self.samples.df.index):  # only include fastq filenames in this study
             fastq_filename = sample_filenames[mt_unique_id]
             sample_name = 'MT.Unique.ID_' + str(mt_unique_id)
             self.manifest['manifest'].append({'sampleName': sample_name, 'dataFileName': fastq_filename})
@@ -148,9 +151,9 @@ class Donors(MetaDataFrame):
         super().__init__(csv_filename=os.path.join(templates_dir, 'Donors.template.tsv'))
         self.df = self.df.set_index('#property')
         self.df.drop(['- Ethnic Group', '-- Current Health Status', '-- Medical History', '-- Smoking History', '-- Medications', '-- Treatment History',
-                     '-- Family History', '-- Treatment History', '-- Family History', '-- Developmental Stage', '- Has Expired?', '-- Estimated Date',
-                     '-- Post-mortem Interval', '- Notes', '* Family Members', '*- Family Member', '*-- Relationship', '*-- DocURL', '* Aliases', '*-  Accession',
-                     '*-- dbName', '*-- URL', '- Health Status', '*-- Notes'], inplace=True)
+                      '-- Family History', '-- Treatment History', '-- Family History', '-- Developmental Stage', '- Has Expired?', '-- Estimated Date',
+                      '-- Post-mortem Interval', '- Notes', '* Family Members', '*- Family Member', '*-- Relationship', '*-- DocURL', '* Aliases', '*-  Accession',
+                      '*-- dbName', '*-- URL', '- Health Status', '*-- Notes'], inplace=True)
         # Fill in the donors dataframe
         i = 1
         for part_id in participants.index:
@@ -170,23 +173,22 @@ class Donors(MetaDataFrame):
             self.df.loc['*-- Value', participant_column] = part_id
             i += 1
         self.df = self.df.drop('value', axis=1)
-        self.df = self.df
+        self.df.columns = [''.join(l for l in col if not l.isdigit() and l != '*') for col in list(self.df.columns)]
+        self.df.index = pd.Index([''.join(l for l in col if not l.isdigit()) for col in list(self.df.index)], name=self.df.index.name)
 
 
 class Biosamples:
     def __init__(self, study_id, templates_dir, filename_base, participants, samples, is_time_series):
-        self.master_biosamples = MetaDataFrame(csv_filename=os.path.join(templates_dir, 'Biosamples.template.tsv'))
         self.filename_base = filename_base
         self.filename_ext = '-EX.metadata.tsv'
 
-        # TODO: need multiple biosamples templates for multiple sources (plasma, serum)
-
+        self.master_biosamples = pd.read_csv(os.path.join(templates_dir, 'Biosamples.template.tsv'), sep='\t')
         self.master_biosamples = self.master_biosamples.set_index('#property')
         self.master_biosamples = self.master_biosamples.drop(['-- Age at Sampling', '-- Notes', '- Description', '--- Symptoms', '--- Pathology', '--- Disease Duration',
-                                                '--- Collection Details',
-                                                '---- Sample Collection Method', '---- Geographic Location',
-                                                '---- Collection Date', '---- Time of Collection',
-                                                '---- Collection Tube Type', '----- Other Collection Tube Type',
+                                                              '--- Collection Details',
+                                                              '---- Sample Collection Method', '---- Geographic Location',
+                                                              '---- Collection Date', '---- Time of Collection',
+                                                              '---- Collection Tube Type', '----- Other Collection Tube Type',
                                                               '---- Holding Time', '---- Holding Temperature',
                                                               '---- Preservatives Used', '---- Freezing Method',
                                                               '---- Number of Times Freeze Thawed',
@@ -194,10 +196,10 @@ class Biosamples:
                                                               '-- Cell Culture Supernatant', '--- Source', '---- Type',
                                                               '---- Cell Line', '---- Start Date', '---- Harvest Date', '--- Tissue',
                                                               '---- Date Obtained', '---- Tissue Type', '--- Notes',
-                                                '-- Starting Amount', '-- Replicate Information',
-                                                '--- Biological Replicate Number', '--- Technical Replicate Number', '-- Provider', '--- Company Name', '--- Lab Name', '--- Person Name',
-                                                '* Pooled Biosamples', '*- Pooled Biosample', '*-- DocURL', '* Aliases', '*-  Accession', '*-- dbName', '*-- URL',
-                                                '*-- Date Submitted to External Database', '*-- Notes'])
+                                                              '-- Starting Amount', '-- Replicate Information',
+                                                              '--- Biological Replicate Number', '--- Technical Replicate Number', '-- Provider', '--- Company Name', '--- Lab Name', '--- Person Name',
+                                                              '* Pooled Biosamples', '*- Pooled Biosample', '*-- DocURL', '* Aliases', '*-  Accession', '*-- dbName', '*-- URL',
+                                                              '*-- Date Submitted to External Database', '*-- Notes'])
         self.master_biosamples = self.master_biosamples.T
         self.master_biosamples.insert(18, '*-- DocURL', [np.nan, 'URL', np.nan, np.nan, 'Relative ID (accession) of doc, provide Document URL'])
         if is_time_series:
@@ -239,6 +241,8 @@ class Biosamples:
                 self.master_biosamples.loc['*-- Value3', sample_column] = samples.loc[mt_unique_id, 'timestep']
             i += 1
         self.master_biosamples = self.master_biosamples.drop('value', axis=1)
+        self.master_biosamples.columns = [''.join(l for l in col if not l.isdigit() and l != '*') for col in list(self.master_biosamples.columns)]
+        self.master_biosamples.index = pd.Index([''.join(l for l in col if not l.isdigit()) for col in list(self.master_biosamples.index)], name=self.master_biosamples.index.name)
 
         # TODO: split master dataframe into one per source
         self.dfs = {'Plasma': MetaDataFrame(), 'Serum': MetaDataFrame()}  # TODO: multiple biosamples files if multiple sources
@@ -254,7 +258,7 @@ def main(args):
         config = yaml.load(file)
     pprint.pprint(config)
     templates_dir = 'templates'
-    submission = Submission(config['group'], config['user_login'], config['study_name'], config['samples_filename'], config['sample_study_names'], config['study_id'], config['dir'], templates_dir, config['md5sum'], config['is_time_series'], config['database'])
+    Submission(config['group'], config['user_login'], config['study_name'], config['samples_filename'], config['sample_study_names'], config['study_id'], config['dir'], templates_dir, config['md5sum'], config['fastq_filenames'], config['is_time_series'], config['database'])
     # Don't forget to manually fill in experiment, run, study, and submission metadata files!
 
 

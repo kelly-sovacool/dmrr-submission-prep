@@ -6,7 +6,8 @@ sample_study_names:
   - Feeding Study-30 min
   - Feeding Study-1 hr
 study_id: EXR-MTEWA1FeedingStudy
-dir: feedingStudy
+working_dir: feedingStudy
+templates_dir: templates
 is_time_series: True
 database: hg19_exrna
 md5sum: daec25d670e3bb6b3ab3bbf5733df68c

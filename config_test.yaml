@@ -7,7 +7,8 @@ sample_study_names:
   - Feeding Study-1 hr
   - Healthy Controls
 study_id: EXR-MTEWA1TestStudy
-dir: testStudy
+working_dir: testStudy
+templates_dir: templates
 is_time_series: True
 database: hg19_exrna
 md5sum: daec25d670e3bb6b3ab3bbf5733df68c

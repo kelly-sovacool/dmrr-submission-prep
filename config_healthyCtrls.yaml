@@ -5,7 +5,8 @@ samples_filename: sample_sheet.csv
 sample_study_names:
   - Healthy Controls
 study_id: EXR-MTEWA1HealthyControls
-dir: healthyCtrl
+working_dir: healthyCtrl
+templates_dir: templates
 is_time_series: False
 database: hg19_exrna
 md5sum: c3f469160b8c2a40e23a2e2395b9e5c0

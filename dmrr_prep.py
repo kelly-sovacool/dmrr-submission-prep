@@ -22,10 +22,6 @@ import yaml
 import time
 
 
-# TODO: handle multiple sources -- e.g. separate experiments & biosamples file for plasma & serum, or single file when there's only one source.
-# TODO: time-series custom metadata
-
-
 class Submission:
     def __init__(self, group, user_login, study_name, samples_filename, sample_study_names, study_id, working_dir, templates_dir, md5sum, fastq_filenames, is_time_series, database):
         self.group = group
@@ -37,61 +33,90 @@ class Submission:
         self.is_time_series = is_time_series
         self.database = database
 
+        # load all the data
         self.samples = Samples(samples_filename, sample_study_names, is_time_series)
         self.participants = Participants(samples_filename, sample_study_names, is_time_series)
         self.donors = Donors(templates_dir, self.participants.df, study_id, is_time_series)
-        self.biosamples = Biosamples(study_id, templates_dir, os.path.join(working_dir, study_id), self.participants.df, self.samples.df, is_time_series)
-
-        with open(os.path.join(templates_dir, 'manifest_template.manifest.json'), 'r') as file:
-            self.manifest = json.load(file)
-        self.load_manifest(fastq_filenames)
-
-        # Strip numbers from the value columns and property indices
-        for df in [self.donors, self.biosamples]:
-            df.columns = [''.join(l for l in col if not l.isdigit() and l != '*') for col in list(df.columns)]
-            df.index = pd.Index([''.join(l for l in col if not l.isdigit()) for col in list(df.index)], name=df.index.name)
+        self.biosamples = Biosamples(study_id, templates_dir, working_dir, self.participants.df, self.samples.df, is_time_series)
+        self.manifest = Manifest(self.biosamples, working_dir, templates_dir, fastq_filenames, self.samples, study_id, study_name, user_login, md5sum, group, database)
 
         # Save all the files
         self.donors.write(os.path.join(working_dir, self.manifest['donorMetadataFileName']))
         self.biosamples.write()
-        with open(working_dir + study_id + '.manifest.json', 'w') as file:
-            json.dump(self.manifest, file, indent=4)
+        self.manifest.write()
 
-    def load_manifest(self, fastq_filenames):
-        # Load the list of fastq filenames
-        with open(fastq_filenames, 'r') as file:
-            sample_filenames = {int(f.split('_')[0]): f.strip() for f in file}  # { MT.Unique.ID: fastq_filename }
+    @classmethod
+    def from_config_dict(cls, config):
+        return cls(config['group'], config['user_login'], config['study_name'], config['samples_filename'], config['sample_study_names'], config['study_id'], config['working_dir'], config['templates_dir'], config['md5sum'], config['fastq_filenames'], config['is_time_series'], config['database'])
 
-        # Fill in the manifest
+
+class Manifest(dict):
+    def __init__(self, biosamples, working_dir, templates_dir, fastq_filenames, samples, study_id, study_name, user_login, md5sum, group, database):
+        with open(os.path.join(templates_dir, 'manifest_template.manifest.json'), 'r') as template_file:
+            super().__init__(json.load(template_file))
+        self.study_id = study_id
+        self.working_dir = working_dir
+
+        # Fill in the manifest metadata
         # TODO: option to supply list of names, or actual tar archive
         # TODO: if tar archive exists, compute md5sum (instead of config param) and traverse to get filenames
-        self.manifest['settings']['analysisName'] = 'MTEWA1_Healthy_Controls_' + datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
-        self.manifest['studyName'] = self.study_name
-        self.manifest['userLogin'] = self.user_login
-        self.manifest['md5CheckSum'] = self.md5sum
-        self.manifest['group'] = self.group
-        self.manifest['db'] = self.database
-        self.manifest['runMetadataFileName'] = self.study_id + '-RU.metadata.tsv'
-        self.manifest['submissionMetadataFileName'] = self.study_id + '-SU.metadata.tsv'
-        self.manifest['studyMetadataFileName'] = self.study_id + '-ST.metadata.tsv'
-        self.manifest['experimentMetadataFileName'] = self.study_id + '-EX.metadata.tsv'
-        self.manifest['biosampleMetadataFileName'] = self.study_id + '-BS.metadata.tsv'  # TODO: different structure for time series data
-        self.manifest['donorMetadataFileName'] = self.study_id + '-DO.metadata.tsv'
-        self.manifest['manifest'] = list()
-        for mt_unique_id in sorted(self.samples.df.index):  # only include fastq filenames in this study
+        self['settings']['analysisName'] = 'MTEWA1_Healthy_Controls_' + datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
+        self['studyName'] = study_name
+        self['userLogin'] = user_login
+        self['md5CheckSum'] = md5sum
+        self['group'] = group
+        self['db'] = database
+        self['runMetadataFileName'] = study_id + '-RU.metadata.tsv'
+        self['submissionMetadataFileName'] = study_id + '-SU.metadata.tsv'
+        self['studyMetadataFileName'] = study_id + '-ST.metadata.tsv'
+        if len(biosamples.dfs) == 1:
+            self['experimentMetadataFileName'] = study_id + '-EX.metadata.tsv'
+            self['biosampleMetadataFileName'] = study_id + '-BS.metadata.tsv'
+        else:
+            self.pop('experimentMetadataFileName')
+            self.pop("biosampleMetadataFileName")
+        self['donorMetadataFileName'] = study_id + '-DO.metadata.tsv'
+        self['manifest'] = list()
+
+        # Fill in the samples to filenames map
+        with open(fastq_filenames, 'r') as file:
+            sample_filenames = {int(f.split('_')[0]): f.strip() for f in file}  # { MT.Unique.ID: fastq_filename }
+        for mt_unique_id in sorted(samples.df.index):  # only include fastq filenames in this study
             fastq_filename = sample_filenames[mt_unique_id]
             sample_name = 'MT.Unique.ID_' + str(mt_unique_id)
-            self.manifest['manifest'].append({'sampleName': sample_name, 'dataFileName': fastq_filename})
-        len(self.manifest['manifest'])
+            sample_source = samples.df.loc[mt_unique_id, 'Source']
+            if len(biosamples.dfs) == 1:
+                sample_dict = {'sampleName': sample_name, 'dataFileName': fastq_filename}
+            else:
+                sample_dict = {'sampleName': sample_name, 'dataFileName': fastq_filename, 'biosampleMetadataFileName': study_id + sample_source + '-BS.metadata.tsv', 'experimentMetadataFileName': study_id + sample_source + '-EX.metadata.tsv'}
+            self['manifest'].append(sample_dict)
+
+    def write(self):
+        with open(os.path.join(self.working_dir, self.study_id + '.manifest.json'), 'w') as file:
+            json.dump(self, file, indent=4, sort_keys=True)
+
+    @property
+    def filenames(self):
+        automatic_filetypes = {'biosampleMetadataFileName', 'donorMetadataFileName'}
+        filenames = set()
+        for key, value in self.items():
+            if 'filename' in key.lower() and 'metadata' in value.lower() and key not in automatic_filetypes:
+                filenames.add(value)
+            elif type(value) == list:
+                for thing in value:
+                    if type(thing) == dict:
+                        for key2, value2 in thing.items():
+                            if 'filename' in key2.lower() and 'metadata' in value2.lower() and key2 not in automatic_filetypes:
+                                filenames.add(value2)
+        return sorted(list(filenames))
 
 
 class MetaDataFrame:
-
-    def __init__(self, csv_filename=None, other_df=None):
+    def __init__(self, csv_filename=None, dataframe=None):
         if csv_filename:
             self.df = pd.read_csv(csv_filename, sep='\t' if csv_filename.endswith('.tsv') else ',')
-        elif other_df:
-            self.df = other_df.copy()
+        elif type(dataframe) == pd.DataFrame:
+            self.df = dataframe.copy()
         else:
             self.df = pd.DataFrame()
 
@@ -104,13 +129,13 @@ class Samples(MetaDataFrame):
         super().__init__(csv_filename=samples_filename)
         # Load the samples spreadsheet
         # only use healthy control study and samples that passed quality control
-        self.samples = self.samples.loc[(self.samples['Study'].isin(sample_study_names)) & (self.samples['MISEQ.QC.PASS'] == 'PASS')]
+        self.df = self.df.loc[(self.df['Study'].isin(sample_study_names)) & (self.df['MISEQ.QC.PASS'] == 'PASS')]
         # keep only the necessary columns
-        self.samples = self.samples[['Participant.ID', 'Sample.ID', 'MT.Unique.ID', 'Source', 'Study']]
-        self.samples = self.samples.set_index(['MT.Unique.ID']).sort_values(by='Participant.ID')
+        self.df = self.df[['Participant.ID', 'Sample.ID', 'MT.Unique.ID', 'Source', 'Study']]
+        self.df = self.df.set_index(['MT.Unique.ID']).sort_values(by='Participant.ID')
         if is_time_series:
-            self.samples['timepoint'] = pd.Series([sample_id.split('-')[1] for sample_id in self.samples['Sample.ID']], index=self.samples.index)
-            self.samples['timestep'] = pd.Series([study.split('-')[1] for study in self.samples['Study']], index=self.samples.index)
+            self.df['timepoint'] = pd.Series([sample_id.split('-')[1] if len(sample_id.split('-')) > 1 else 'T0' for sample_id in self.df['Sample.ID']], index=self.df.index)
+            self.df['timestep'] = pd.Series([study.split('-')[1] if len(study.split('-')) > 1 else 'NA' for study in self.df['Study']], index=self.df.index)
 
 
 class Participants(MetaDataFrame):
@@ -121,10 +146,16 @@ class Participants(MetaDataFrame):
         for column in ['Gender', 'Race', 'Source']:  # strip whitespace for consistency
             self.df[column] = self.df[column].str.strip()
             if column == 'Gender':  # capitalize first letter
+                for index in self.df.index:
+                    gender = self.df.loc[index, 'Gender']
+                    if gender != '#MISSING#':
+                        self.df.loc[index, 'Gender'] = gender.capitalize()
                 self.df[column] = self.df[column].str.capitalize()
         # remove duplicate participants -- all have plasma but some additionally have serum  TODO: make this more general to work with other study designs
         self.df = self.df.loc[(self.df['Source'] == 'Plasma')]
         if is_time_series:
+            self.df['timepoint'] = pd.Series([sample_id.split('-')[1] if len(sample_id.split('-')) > 1 else 'T0' for sample_id in self.df['Sample.ID']], index=self.df.index)
+            self.df['timestep'] = pd.Series([study.split('-')[1] if len(study.split('-')) > 1 else 'NA' for study in self.df['Study']], index=self.df.index)
             self.df = self.df.loc[(self.df['timepoint'] == 'T0')]
         self.df = self.df[['Participant.ID', 'Age', 'Race', 'Gender']].set_index('Participant.ID')
 
@@ -142,7 +173,6 @@ class Participants(MetaDataFrame):
         for part_id in self.df.index:
             race = self.df.at[part_id, 'Race']
             self.df.loc[part_id, 'Race'] = race_ontology[race] if race in race_ontology else 'Multiracial'
-        pprint.pprint({'Age': set(self.df['Age']), 'Race': set(self.df['Race']), 'Gender': set(self.df['Gender'])})
 
 
 class Donors(MetaDataFrame):
@@ -154,37 +184,38 @@ class Donors(MetaDataFrame):
                       '-- Family History', '-- Treatment History', '-- Family History', '-- Developmental Stage', '- Has Expired?', '-- Estimated Date',
                       '-- Post-mortem Interval', '- Notes', '* Family Members', '*- Family Member', '*-- Relationship', '*-- DocURL', '* Aliases', '*-  Accession',
                       '*-- dbName', '*-- URL', '- Health Status', '*-- Notes'], inplace=True)
+        genders = {'Male', 'Female'}
         # Fill in the donors dataframe
-        i = 1
-        for part_id in participants.index:
-            print(part_id)
+        for index, part_id in enumerate(participants.index):
             participant_column = 'value' + part_id
-            donor_id = study_id + str(i) + '-DO'
+            donor_id = study_id + str(index + 1) + '-DO'
             participants.loc[part_id, 'donor.id'] = donor_id
-            self.df.insert(i, participant_column, self.df['value'])
+            self.df.insert(index + 1, participant_column, self.df['value'])
             self.df.loc['Donor', participant_column] = donor_id  # for matching biosamples to donor ids
             self.df.loc['- Status', participant_column] = 'Add'
-            self.df.loc['- Sex', participant_column] = participants.at[part_id, 'Gender']
+            gender = participants.at[part_id, 'Gender']
+            self.df.loc['- Sex', participant_column] = gender if gender in genders else '#MISSING#'
             self.df.loc['- Racial Category', participant_column] = participants.at[part_id, 'Race']
             self.df.loc['- Donor Type', participant_column] = 'Healthy Subject' if not is_time_series else 'Experimental'
-            self.df.loc['- Age', participant_column] = str(participants.at[part_id, 'Age']) + ' years'
+            age = str(participants.at[part_id, 'Age'])
+            self.df.loc['- Age', participant_column] = age + ' years' if age != '#MISSING#' else age
             self.df.loc['* Custom Metadata', participant_column] = 1
             self.df.loc['*- Property Name', participant_column] = 'Participant.ID'
             self.df.loc['*-- Value', participant_column] = part_id
-            i += 1
         self.df = self.df.drop('value', axis=1)
         self.df.columns = [''.join(l for l in col if not l.isdigit() and l != '*') for col in list(self.df.columns)]
         self.df.index = pd.Index([''.join(l for l in col if not l.isdigit()) for col in list(self.df.index)], name=self.df.index.name)
 
 
 class Biosamples:
-    def __init__(self, study_id, templates_dir, filename_base, participants, samples, is_time_series):
-        self.filename_base = filename_base
-        self.filename_ext = '-EX.metadata.tsv'
+    def __init__(self, study_id, templates_dir, working_dir, participants, samples, is_time_series):
+        self.filename_base = os.path.join(working_dir, study_id)
+        self.filename_ext = '-BS.metadata.tsv'
 
-        self.master_biosamples = pd.read_csv(os.path.join(templates_dir, 'Biosamples.template.tsv'), sep='\t')
-        self.master_biosamples = self.master_biosamples.set_index('#property')
-        self.master_biosamples = self.master_biosamples.drop(['-- Age at Sampling', '-- Notes', '- Description', '--- Symptoms', '--- Pathology', '--- Disease Duration',
+        # load the template and clean it up
+        template = MetaDataFrame(csv_filename=os.path.join(templates_dir, 'Biosamples.template.tsv'))
+        template.df = template.df.set_index('#property')
+        template.df = template.df.drop(['-- Age at Sampling', '-- Notes', '- Description', '--- Symptoms', '--- Pathology', '--- Disease Duration',
                                                               '--- Collection Details',
                                                               '---- Sample Collection Method', '---- Geographic Location',
                                                               '---- Collection Date', '---- Time of Collection',
@@ -200,65 +231,77 @@ class Biosamples:
                                                               '--- Biological Replicate Number', '--- Technical Replicate Number', '-- Provider', '--- Company Name', '--- Lab Name', '--- Person Name',
                                                               '* Pooled Biosamples', '*- Pooled Biosample', '*-- DocURL', '* Aliases', '*-  Accession', '*-- dbName', '*-- URL',
                                                               '*-- Date Submitted to External Database', '*-- Notes'])
-        self.master_biosamples = self.master_biosamples.T
-        self.master_biosamples.insert(18, '*-- DocURL', [np.nan, 'URL', np.nan, np.nan, 'Relative ID (accession) of doc, provide Document URL'])
+        template.df = template.df.T
+        template.df.insert(18, '*-- DocURL', [np.nan, 'URL', np.nan, np.nan, 'Relative ID (accession) of doc, provide Document URL'])
         if is_time_series:
-            self.master_biosamples.insert(23, '*- Property Name2', self.master_biosamples['*- Property Name'])
-            self.master_biosamples.insert(24, '*-- Value2', self.master_biosamples['*-- Value'])
-            self.master_biosamples.insert(25, '*- Property Name3', self.master_biosamples['*- Property Name'])
-            self.master_biosamples.insert(26, '*-- Value3', self.master_biosamples['*-- Value'])
-        self.master_biosamples = self.master_biosamples.T
+            template.df.insert(23, '*- Property Name2', template.df['*- Property Name'])
+            template.df.insert(24, '*-- Value2', template.df['*-- Value'])
+            template.df.insert(25, '*- Property Name3', template.df['*- Property Name'])
+            template.df.insert(26, '*-- Value3', template.df['*-- Value'])
+        template.df = template.df.T
 
-        # Fill in the biosamples dataframe
-        i = 1
-        for mt_unique_id in samples.index:
+        sources = set(samples['Source'])
+        self.dfs = dict()  # one dataframe per source
+        for source in sources:
+            self.dfs[source] = MetaDataFrame(dataframe=template.df)
+        start_column_length = len(template.df.columns)
+        for mt_unique_id in sorted(samples.index):  # Fill in the biosamples dataframes
             donor_id = participants.loc[samples.loc[mt_unique_id, 'Participant.ID'], 'donor.id']
             sample_column = 'value' + str(mt_unique_id)
-            self.master_biosamples.insert(i, sample_column, self.master_biosamples['value'])
-            self.master_biosamples.loc['Biosample', sample_column] = study_id + str(i) + '-BS'
-            self.master_biosamples.loc['- Status', sample_column] = 'Add'
-            self.master_biosamples.loc['- Name', sample_column] = 'MT.Unique.ID_' + str(mt_unique_id)
-            self.master_biosamples.loc['- Donor ID', sample_column] = donor_id
-            self.master_biosamples.loc['-- DocURL', sample_column] = 'coll/Donors/doc/' + donor_id
-            self.master_biosamples.loc['--- Scientific Name', sample_column] = 'Homo sapiens'
-            self.master_biosamples.loc['--- Common Name', sample_column] = 'Human'
-            self.master_biosamples.loc['--- Taxon ID', sample_column] = 9606
-            self.master_biosamples.loc['-- Disease Type', sample_column] = 'Healthy Subject'
-            self.master_biosamples.loc['-- Anatomical Location', sample_column] = 'Plasma cell'
-            self.master_biosamples.loc['--- Biofluid Name', sample_column] = samples.loc[mt_unique_id, 'Source']
-            self.master_biosamples.loc['-- exRNA Source', sample_column] = ' total cell-free biofluid RNA'
-            self.master_biosamples.loc['-- Fractionation', sample_column] = 'Yes'
-            self.master_biosamples.loc['* Related Experiments', sample_column] = 1
-            self.master_biosamples.loc['*- Related Experiment', sample_column] = study_id + '1-EX'
-            self.master_biosamples.loc['*-- DocURL', sample_column] = 'coll/Experiments/doc/' + study_id + '1-EX'
-            self.master_biosamples.loc['* Custom Metadata', sample_column] = 2 if is_time_series else 1
-            self.master_biosamples.loc['*- Property Name', sample_column] = 'Participant.ID'
-            self.master_biosamples.loc['*-- Value', sample_column] = samples.loc[mt_unique_id, 'Participant.ID']
+            sample_source = samples.loc[mt_unique_id, 'Source']
+            index = len(self.dfs[sample_source].df.columns) - start_column_length + 1
+            self.dfs[sample_source].df.insert(index, sample_column, self.dfs[sample_source].df['value'])
+            self.dfs[sample_source].df.loc['Biosample', sample_column] = study_id + str(index) + '-BS'
+            self.dfs[sample_source].df.loc['- Status', sample_column] = 'Add'
+            self.dfs[sample_source].df.loc['- Name', sample_column] = 'MT.Unique.ID_' + str(mt_unique_id)
+            self.dfs[sample_source].df.loc['- Donor ID', sample_column] = donor_id
+            self.dfs[sample_source].df.loc['-- DocURL', sample_column] = 'coll/Donors/doc/' + donor_id
+            self.dfs[sample_source].df.loc['--- Scientific Name', sample_column] = 'Homo sapiens'
+            self.dfs[sample_source].df.loc['--- Common Name', sample_column] = 'Human'
+            self.dfs[sample_source].df.loc['--- Taxon ID', sample_column] = 9606
+            self.dfs[sample_source].df.loc['-- Disease Type', sample_column] = 'Healthy Subject'
+            self.dfs[sample_source].df.loc['-- Anatomical Location', sample_column] = 'Plasma cell'
+            self.dfs[sample_source].df.loc['--- Biofluid Name', sample_column] = sample_source
+            self.dfs[sample_source].df.loc['-- exRNA Source', sample_column] = ' total cell-free biofluid RNA'
+            self.dfs[sample_source].df.loc['-- Fractionation', sample_column] = 'Yes'
+            self.dfs[sample_source].df.loc['* Related Experiments', sample_column] = 1
+            self.dfs[sample_source].df.loc['*- Related Experiment', sample_column] = study_id + '1-EX'
+            self.dfs[sample_source].df.loc['*-- DocURL', sample_column] = 'coll/Experiments/doc/' + study_id + '1-EX'
+            self.dfs[sample_source].df.loc['* Custom Metadata', sample_column] = 2 if is_time_series else 1
+            self.dfs[sample_source].df.loc['*- Property Name', sample_column] = 'Participant.ID'
+            self.dfs[sample_source].df.loc['*-- Value', sample_column] = samples.loc[mt_unique_id, 'Participant.ID']
             if is_time_series:
-                self.master_biosamples.loc['*- Property Name2', sample_column] = 'timepoint'
-                self.master_biosamples.loc['*-- Value2', sample_column] = samples.loc[mt_unique_id, 'timepoint']
-                self.master_biosamples.loc['*- Property Name3', sample_column] = 'timestep'
-                self.master_biosamples.loc['*-- Value3', sample_column] = samples.loc[mt_unique_id, 'timestep']
-            i += 1
-        self.master_biosamples = self.master_biosamples.drop('value', axis=1)
-        self.master_biosamples.columns = [''.join(l for l in col if not l.isdigit() and l != '*') for col in list(self.master_biosamples.columns)]
-        self.master_biosamples.index = pd.Index([''.join(l for l in col if not l.isdigit()) for col in list(self.master_biosamples.index)], name=self.master_biosamples.index.name)
+                self.dfs[sample_source].df.loc['*- Property Name2', sample_column] = 'timepoint'
+                self.dfs[sample_source].df.loc['*-- Value2', sample_column] = samples.loc[mt_unique_id, 'timepoint']
+                self.dfs[sample_source].df.loc['*- Property Name3', sample_column] = 'timestep'
+                self.dfs[sample_source].df.loc['*-- Value3', sample_column] = samples.loc[mt_unique_id, 'timestep']
 
-        # TODO: split master dataframe into one per source
-        self.dfs = {'Plasma': MetaDataFrame(), 'Serum': MetaDataFrame()}  # TODO: multiple biosamples files if multiple sources
-        # self.dfs = {'': MetaDataFrame()}  # TODO: single biosamples file for one source
+        for key in self.dfs:  # drop the empty "value" column and rename all numbered value columns to just "value"
+            self.dfs[key].df = self.dfs[key].df.drop('value', axis=1)
+            self.dfs[key].df.columns = [''.join(l for l in col if not l.isdigit() and l != '*') for col in list(self.dfs[key].df.columns)]
+            self.dfs[key].df.index = pd.Index([''.join(l for l in col if not l.isdigit()) for col in list(self.dfs[key].df.index)], name=self.dfs[key].df.index.name)
+
+        if len(self.dfs) == 1:  # reassign the lone dataframe to an empty string dict key
+            self.dfs[''] = self.dfs.pop(set(self.dfs.keys()).pop())
 
     def write(self):
-        for source, df in self.dfs.values():
+        for source, df in self.dfs.items():
             df.write(self.filename_base + source + self.filename_ext)
 
 
 def main(args):
+    start = time.time()
     with open(args['<config_filename>'], 'r') as file:
         config = yaml.load(file)
+    print('Configuration:')
     pprint.pprint(config)
-    templates_dir = 'templates'
-    Submission(config['group'], config['user_login'], config['study_name'], config['samples_filename'], config['sample_study_names'], config['study_id'], config['dir'], templates_dir, config['md5sum'], config['fastq_filenames'], config['is_time_series'], config['database'])
+    if not os.path.exists(config['working_dir']):
+        os.mkdir(config['working_dir'])
+    submission = Submission.from_config_dict(config)
+    print('Prepared donors, biosamples, and manifest files for {} in {}'.format(config['study_id'], datetime.timedelta(seconds=time.time()-start)))
+    print("Don't forget to create and fill in the following files:")
+    for filename in submission.manifest.filenames:
+        print('\t', filename)
     # Don't forget to manually fill in experiment, run, study, and submission metadata files!
 
 

@@ -1,6 +1,20 @@
-# dmrr-submission-prep
-Prepare data for submission to the exRNA Data Coordination Center.
-This project was created for the Tewari Lab at the University of Michigan.
+# DMRR Submission Preparation
+
+Prepare data for submission to the [exRNA Data Coordination Center](http://genboree.org/theCommons/projects/exrna-mads/wiki).
+This project was created for the [Tewari Lab](http://www.tewarilab.org/) at the University of Michigan.
+
+## Setup
+
+You can download this repository with:
+```
+$ git clone https://github.com/kelly-sovacool/latex-templates.git
+```
+
+Python 3 packages to install:
+ - pandas
+ - docopt
+ - numpy
+ - yaml
 
 ## Usage
 
@@ -29,4 +43,4 @@ Run the program with:
 $ dmrr_prep.py config.yaml
 ```
 
-The program will create donors metadata, biosamples metadata, and a manifest and write them to `working_dir`.
+The program will create donors metadata, biosamples metadata, and a manifest file and write them to `working_dir`.

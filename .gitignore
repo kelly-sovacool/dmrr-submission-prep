@@ -3,3 +3,4 @@
 .ipynb_checkpoints/
 Icon*
 past_submission_examples/
+*.csv

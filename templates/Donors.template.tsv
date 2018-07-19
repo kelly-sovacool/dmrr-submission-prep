@@ -26,7 +26,7 @@ Donor		autoID(EXR, uniqAlphaNum, DO)			Document Describing Information About the
 *-  Accession		string		TRUE	Alias Accession ID of this Biosample in other databases (Example: SRA, GEO)
 *-- dbName		enum(SRA, GEO, DDBJ, ENCODE, dbGaP)			Database name of alias (SRA, GEO, DDBJ, ENCODE, dbGaP)
 *-- URL		url			URL that points to this Biosample in alias database
-* Custom Metadata		numItems			Custom metadata fiels defined by users
+* Custom Metadata		numItems			Custom metadata fields defined by users
 *- Property Name		string		TRUE	Name of the metadata property
-*-- Value		string			Value of this additonal metadata property
+*-- Value		string			Value of this additional metadata property
 *-- Notes		string			Additional notes about this metadata property and value

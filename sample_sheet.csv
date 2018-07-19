@@ -10,7 +10,7 @@ MT.Unique.ID,Sample.ID,Participant.ID,Study,Age,Gender,Race,Collection.Date,Sour
 9,70092,70092,Healthy Controls,25,Male,Asian,6/10/2002,Plasma,Set 1a,Index9,Run1,PASS
 10,70103,70103,Healthy Controls,22,Male,Asian,6/20/2002,Plasma,Set 1a,Index10,Run1,PASS
 11,70105,70105,Healthy Controls,40,Male,White,5/22/2002,Plasma,Set 1a,Index11,Run1,PASS
-12,Plasma miR#MISSING# Pool,#MISSING#,#MISSING#,#MISSING#,#MISSING#,#MISSING#,3/2/2017,#MISSING#,Set 1a,Index12,Run1,PASS
+12,Plasma miRNA Pool,#MISSING#,#MISSING#,#MISSING#,#MISSING#,#MISSING#,3/2/2017,#MISSING#,Set 1a,Index12,Run1,PASS
 13,70114,70114,Healthy Controls,24,Female,Asian,5/21/2002,Plasma,Set 1b,Index13,Run1,FAIL
 14,70125,70125,Healthy Controls,30,Female,White,7/11/2002,Plasma,Set 1b,Index14,Run1,PASS
 15,70182,70182,Healthy Controls,33,Female,White,5/20/2002,Plasma,Set 1b,Index15,Run1,PASS

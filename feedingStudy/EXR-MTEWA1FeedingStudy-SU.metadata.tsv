@@ -1,6 +1,6 @@
 #property	value	domain	default	required	description
-Submission	EXR-MTEWA1HealthyControls-SU	autoID(EXR, uniqAlphaNum, SU)			Document Describing Information About the Submission; Submission ID
-- Status	Add	enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate)	Add	TRUE	Status of the document
+Submission	EXR-MTEWA1FeedingStudy-SU	autoID(EXR, uniqAlphaNum, SU)			Document Describing Information About the Submission; Submission ID
+- Status	Protect	enum(Add, Modify, Hold, Cancel, Suppress, Release, Protect, Validate)	Add	TRUE	Status of the document
 - Submitter	EXR-KSOVA1-SUB	regexp(EXR-[A-Z0-9]{6}-SUB)		TRUE	Category -- Submitter
 -- First Name	Kelly	string		TRUE	Submitter's first name
 -- Last Name	Sovacool	string		TRUE	Submitter's last name

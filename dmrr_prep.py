@@ -21,6 +21,8 @@ import pprint
 import yaml
 import time
 
+MISSING = "#MISSING#"
+
 
 class Submission:
     def __init__(self, group, user_login, study_name, samples_filename, sample_study_names, study_id, working_dir, templates_dir, md5sum, fastq_filenames, is_time_series, database):
@@ -143,14 +145,7 @@ class Participants(MetaDataFrame):
         super().__init__(csv_filename=samples_filename)
         # only use healthy control study and samples that passed quality control
         self.df = self.df.loc[(self.df['Study'].isin(sample_study_names)) & (self.df['MISEQ.QC.PASS'] == 'PASS')]
-        for column in ['Gender', 'Race', 'Source']:  # strip whitespace for consistency
-            self.df[column] = self.df[column].str.strip()
-            if column == 'Gender':  # capitalize first letter
-                for index in self.df.index:
-                    gender = self.df.loc[index, 'Gender']
-                    if gender != '#MISSING#':
-                        self.df.loc[index, 'Gender'] = gender.capitalize()
-                self.df[column] = self.df[column].str.capitalize()
+        self.df["Source"] = self.df["Source"].str.capitalize()
         # remove duplicate participants -- all have plasma but some additionally have serum  TODO: make this more general to work with other study designs
         self.df = self.df.loc[(self.df['Source'] == 'Plasma')]
         if is_time_series:
@@ -169,10 +164,18 @@ class Participants(MetaDataFrame):
                          'Native Hawiian or other Pacific Islander': 'Native Hawaiian or Other Pacific Islander',
                          'Pacific Islander': 'Native Hawaiian or Other Pacific Islander',
                          'White': 'White', 'white': 'White',
-                         '#MISSING#': '#MISSING#'}
-        for part_id in self.df.index:
-            race = self.df.at[part_id, 'Race']
-            self.df.loc[part_id, 'Race'] = race_ontology[race] if race in race_ontology else 'Multiracial'
+                         np.nan: MISSING}
+        for index in self.df.index:
+            race = self.df.at[index, 'Race']
+            self.df.loc[index, 'Race'] = race_ontology[race] if race in race_ontology else 'Multiracial'
+            age = self.df.at[index, 'Age']
+            if not (0 <= age <= 130):
+                self.df.loc[index, 'Age'] = MISSING
+            gender = self.df.loc[index, 'Gender']
+            if type(gender) == float:
+                self.df.loc[index, 'Gender'] = MISSING
+            elif gender != MISSING:
+                self.df.loc[index, 'Gender'] = gender.capitalize()
 
 
 class Donors(MetaDataFrame):
@@ -192,7 +195,7 @@ class Donors(MetaDataFrame):
             participants.loc[part_id, 'donor.id'] = donor_id
             self.df.insert(index + 1, participant_column, self.df['value'])
             self.df.loc['Donor', participant_column] = donor_id  # for matching biosamples to donor ids
-            self.df.loc['- Status', participant_column] = 'Add'
+            self.df.loc['- Status', participant_column] = 'Protect' if is_time_series else 'Add'
             gender = participants.at[part_id, 'Gender']
             self.df.loc['- Sex', participant_column] = gender if gender in genders else '#MISSING#'
             self.df.loc['- Racial Category', participant_column] = participants.at[part_id, 'Race']
@@ -212,25 +215,48 @@ class Biosamples:
         self.filename_base = os.path.join(working_dir, study_id)
         self.filename_ext = '-BS.metadata.tsv'
 
+        timepoints = {"1 hr": {"T0": 'Fasting blood draw',
+                               "T1": "1 hr post meal 1",
+                               "T2": "2 hrs post meal 1",
+                               "T3": "3 hrs post meal 1",
+                               "T4": "4 hrs post meal 1",
+                               "T5": "1 hr post meal 2",
+                               "T6": "2 hrs post meal 2",
+                               "T7": "3 hrs post meal 2",
+                               "T8": "4 hrs post meal 2",
+                               "T9": "24 hrs post meal 2",
+                               "T10": "48 hrs post meal 2"},
+                      "30 min": {"T0": 'Fasting blood draw',
+                                 "T1": "0.5 hr post meal 1",
+                                 "T2": "1 hr post meal 1",
+                                 "T3": "1.5 hrs post meal 1",
+                                 "T4": "2 hrs post meal 1",
+                                 "T5": "2.5 hrs post meal 1",
+                                 "T6": "3 hrs post meal 1",
+                                 "T7": "3.5 hrs post meal 1",
+                                 "T8": "4 hrs post meal 1",
+                                 "T9": "24 hrs post meal 2",
+                                 "T10": "48 hrs post meal 2"}}
+
         # load the template and clean it up
         template = MetaDataFrame(csv_filename=os.path.join(templates_dir, 'Biosamples.template.tsv'))
         template.df = template.df.set_index('#property')
         template.df = template.df.drop(['-- Age at Sampling', '-- Notes', '- Description', '--- Symptoms', '--- Pathology', '--- Disease Duration',
-                                                              '--- Collection Details',
-                                                              '---- Sample Collection Method', '---- Geographic Location',
-                                                              '---- Collection Date', '---- Time of Collection',
-                                                              '---- Collection Tube Type', '----- Other Collection Tube Type',
-                                                              '---- Holding Time', '---- Holding Temperature',
-                                                              '---- Preservatives Used', '---- Freezing Method',
-                                                              '---- Number of Times Freeze Thawed',
-                                                              '---- Contamination Removal Method', '--- Notes',
-                                                              '-- Cell Culture Supernatant', '--- Source', '---- Type',
-                                                              '---- Cell Line', '---- Start Date', '---- Harvest Date', '--- Tissue',
-                                                              '---- Date Obtained', '---- Tissue Type', '--- Notes',
-                                                              '-- Starting Amount', '-- Replicate Information',
-                                                              '--- Biological Replicate Number', '--- Technical Replicate Number', '-- Provider', '--- Company Name', '--- Lab Name', '--- Person Name',
-                                                              '* Pooled Biosamples', '*- Pooled Biosample', '*-- DocURL', '* Aliases', '*-  Accession', '*-- dbName', '*-- URL',
-                                                              '*-- Date Submitted to External Database', '*-- Notes'])
+                                        '--- Collection Details',
+                                        '---- Sample Collection Method', '---- Geographic Location',
+                                        '---- Collection Date', '---- Time of Collection',
+                                        '---- Collection Tube Type', '----- Other Collection Tube Type',
+                                        '---- Holding Time', '---- Holding Temperature',
+                                        '---- Preservatives Used', '---- Freezing Method',
+                                        '---- Number of Times Freeze Thawed',
+                                        '---- Contamination Removal Method', '--- Notes',
+                                        '-- Cell Culture Supernatant', '--- Source', '---- Type',
+                                        '---- Cell Line', '---- Start Date', '---- Harvest Date', '--- Tissue',
+                                        '---- Date Obtained', '---- Tissue Type', '--- Notes',
+                                        '-- Starting Amount', '-- Replicate Information',
+                                        '--- Biological Replicate Number', '--- Technical Replicate Number', '-- Provider', '--- Company Name', '--- Lab Name', '--- Person Name',
+                                        '* Pooled Biosamples', '*- Pooled Biosample', '*-- DocURL', '* Aliases', '*-  Accession', '*-- dbName', '*-- URL',
+                                        '*-- Date Submitted to External Database', '*-- Notes'])
         template.df = template.df.T
         template.df.insert(18, '*-- DocURL', [np.nan, 'URL', np.nan, np.nan, 'Relative ID (accession) of doc, provide Document URL'])
         if is_time_series:
@@ -252,7 +278,7 @@ class Biosamples:
             index = len(self.dfs[sample_source].df.columns) - start_column_length + 1
             self.dfs[sample_source].df.insert(index, sample_column, self.dfs[sample_source].df['value'])
             self.dfs[sample_source].df.loc['Biosample', sample_column] = study_id + str(index) + '-BS'
-            self.dfs[sample_source].df.loc['- Status', sample_column] = 'Add'
+            self.dfs[sample_source].df.loc['- Status', sample_column] = 'Protect' if is_time_series else 'Add'
             self.dfs[sample_source].df.loc['- Name', sample_column] = 'MT.Unique.ID_' + str(mt_unique_id)
             self.dfs[sample_source].df.loc['- Donor ID', sample_column] = donor_id
             self.dfs[sample_source].df.loc['-- DocURL', sample_column] = 'coll/Donors/doc/' + donor_id
@@ -271,10 +297,14 @@ class Biosamples:
             self.dfs[sample_source].df.loc['*- Property Name', sample_column] = 'Participant.ID'
             self.dfs[sample_source].df.loc['*-- Value', sample_column] = samples.loc[mt_unique_id, 'Participant.ID']
             if is_time_series:
-                self.dfs[sample_source].df.loc['*- Property Name2', sample_column] = 'timepoint'
-                self.dfs[sample_source].df.loc['*-- Value2', sample_column] = samples.loc[mt_unique_id, 'timepoint']
-                self.dfs[sample_source].df.loc['*- Property Name3', sample_column] = 'timestep'
-                self.dfs[sample_source].df.loc['*-- Value3', sample_column] = samples.loc[mt_unique_id, 'timestep']
+                self.dfs[sample_source].df.loc['*- Property Name2', sample_column] = 'timepoint_id'
+                timepoint_id = samples.loc[mt_unique_id, 'timepoint']
+                self.dfs[sample_source].df.loc['*-- Value2', sample_column] = timepoint_id
+                self.dfs[sample_source].df.loc['*- Property Name3', sample_column] = 'timepoint_description'
+                time_between_collections = samples.loc[mt_unique_id, 'timestep']
+                self.dfs[sample_source].df.loc['*-- Value3', sample_column] = timepoints[time_between_collections][timepoint_id]
+                self.dfs[sample_source].df.loc['*- Property Name4', sample_column] = 'time_between_sample_collections_0-8'
+                self.dfs[sample_source].df.loc['*-- Value4', sample_column] = time_between_collections
 
         for key in self.dfs:  # drop the empty "value" column and rename all numbered value columns to just "value"
             self.dfs[key].df = self.dfs[key].df.drop('value', axis=1)
@@ -298,7 +328,7 @@ def main(args):
     if not os.path.exists(config['working_dir']):
         os.mkdir(config['working_dir'])
     submission = Submission.from_config_dict(config)
-    print('Prepared donors, biosamples, and manifest files for {} in {}'.format(config['study_id'], datetime.timedelta(seconds=time.time()-start)))
+    print('Prepared donors, biosamples, and manifest files for {} in {}'.format(config['study_id'], datetime.timedelta(seconds=time.time() - start)))
     print("Don't forget to create and fill in the following files:")
     for filename in submission.manifest.filenames:
         print('\t', filename)

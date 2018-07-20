@@ -62,7 +62,7 @@ class Manifest(dict):
         # Fill in the manifest metadata
         # TODO: option to supply list of names, or actual tar archive
         # TODO: if tar archive exists, compute md5sum (instead of config param) and traverse to get filenames
-        self['settings']['analysisName'] = 'MTEWA1_{}_{}'.format(study_name.strip('EXR-MTEWA1'), datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
+        self['settings']['analysisName'] = 'MTEWA1_{}_{}'.format(study_id.strip('EXR-MTEWA1'), datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d'))
         self['studyName'] = study_name
         self['userLogin'] = user_login
         self['md5CheckSum'] = md5sum

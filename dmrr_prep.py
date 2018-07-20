@@ -264,6 +264,8 @@ class Biosamples:
             template.df.insert(24, '*-- Value2', template.df['*-- Value'])
             template.df.insert(25, '*- Property Name3', template.df['*- Property Name'])
             template.df.insert(26, '*-- Value3', template.df['*-- Value'])
+            template.df.insert(27, '*- Property Name4', template.df['*- Property Name'])
+            template.df.insert(28, '*-- Value4', template.df['*-- Value'])
         template.df = template.df.T
 
         sources = set(samples['Source'])
@@ -293,7 +295,7 @@ class Biosamples:
             self.dfs[sample_source].df.loc['* Related Experiments', sample_column] = 1
             self.dfs[sample_source].df.loc['*- Related Experiment', sample_column] = study_id + '1-EX'
             self.dfs[sample_source].df.loc['*-- DocURL', sample_column] = 'coll/Experiments/doc/' + study_id + '1-EX'
-            self.dfs[sample_source].df.loc['* Custom Metadata', sample_column] = 2 if is_time_series else 1
+            self.dfs[sample_source].df.loc['* Custom Metadata', sample_column] = 4 if is_time_series else 1
             self.dfs[sample_source].df.loc['*- Property Name', sample_column] = 'Participant.ID'
             self.dfs[sample_source].df.loc['*-- Value', sample_column] = samples.loc[mt_unique_id, 'Participant.ID']
             if is_time_series:

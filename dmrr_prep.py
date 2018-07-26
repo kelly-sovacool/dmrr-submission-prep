@@ -334,7 +334,6 @@ def main(args):
     print("Don't forget to create and fill in the following files:")
     for filename in submission.manifest.filenames:
         print('\t', filename)
-    # Don't forget to manually fill in experiment, run, study, and submission metadata files!
 
 
 if __name__ == "__main__":

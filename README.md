@@ -1,6 +1,6 @@
 # DMRR Submission Preparation
 
-Prepare data for submission to the [exRNA Data Coordination Center](http://genboree.org/theCommons/projects/exrna-mads/wiki).
+Prepare miRNA metadata for submission to the [exRNA Data Coordination Center](http://genboree.org/theCommons/projects/exrna-mads/wiki).
 This project was created for the [Tewari Lab](http://www.tewarilab.org/) at the University of Michigan.
 
 ## Setup

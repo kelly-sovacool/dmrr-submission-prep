@@ -1,7 +1,7 @@
 .DS_Store
 .idea/
 .ipynb_checkpoints/
-Icon*
+*Icon*
 past_submission_examples/
 healthyCtrl/
 feedingStudy

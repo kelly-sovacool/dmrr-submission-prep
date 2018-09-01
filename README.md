@@ -7,7 +7,7 @@ This project was created for the [Tewari Lab](http://www.tewarilab.org/) at the 
 
 You can download this repository with:
 ```
-$ git clone https://github.com/kelly-sovacool/latex-templates.git
+$ git clone https://github.com/kelly-sovacool/dmrr-submission-prep.git
 ```
 
 Python 3 packages to install:
@@ -37,6 +37,7 @@ md5sum: daec25d670e3bb6b3ab3bbf5733df68c
 fastq_filenames: HealthyControl_and_FeedingStudy_fastq_file.names.txt
 tar_archive: None
 ```
+The samples sheet should be a csv file with the following column names: `Participant.ID`, `Sample.ID`, `MT.Unique.ID`, `Source`, and `Study`. Each row should be a different sample.
 
 Run the program with:
 ```

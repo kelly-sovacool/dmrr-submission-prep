@@ -37,7 +37,7 @@ md5sum: daec25d670e3bb6b3ab3bbf5733df68c
 fastq_filenames: HealthyControl_and_FeedingStudy_fastq_file.names.txt
 tar_archive: None
 ```
-The samples sheet should be a csv file with the following column names: `Participant.ID`, `Sample.ID`, `MT.Unique.ID`, `Source`, and `Study`. Each row should be a different sample.
+The `samples_filename` should be the path to a csv file with the following column names: `Participant.ID`, `Sample.ID`, `MT.Unique.ID`, `Source`, and `Study`. Each row should be a different sample.
 
 Run the program with:
 ```
